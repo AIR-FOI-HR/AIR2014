@@ -3,10 +3,13 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,5 +36,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                  }
             },5000);
+
+        /*
+        * Handler koji pokrece MainScreen activity
+        * 10 sekundi nakon pokretanja MainActivitya
+        */
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //pokretanje novog activitya
+                Intent intent = new Intent(MainActivity.this, MainScreen.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            }
+        },10000);
     }
 }
