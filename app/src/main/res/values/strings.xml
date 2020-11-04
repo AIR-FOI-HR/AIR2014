@@ -3,12 +3,10 @@
     <string name="soundOn" />
     <string name="soundOff" />
     <string name="mainScreenCar" />
-    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
-    <string name="settings_header">Postavke</string>
-    <string name="sosSettings">Postavke SOS</string>
-    <string name="soundSettings">Postavke zvuka</string>
+    <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
