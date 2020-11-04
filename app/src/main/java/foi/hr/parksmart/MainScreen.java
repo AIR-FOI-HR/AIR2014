@@ -36,6 +36,12 @@ public class MainScreen extends AppCompatActivity  {
                 callSos(v);
             }
         });
+        //Idi na postavke gumb
+        FloatingActionButton btnSettings=findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener((View view)->{
+            OpenSettingsActivity();
+        });
+
     }
 
 
@@ -58,5 +64,10 @@ public class MainScreen extends AppCompatActivity  {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(sosPhoneNumber));
         startActivity(callIntent);
+    }
+    private void OpenSettingsActivity()
+    {
+        Intent intentSettings=new Intent(this, SettingsActivity.class);
+        startActivity(intentSettings);
     }
 }
