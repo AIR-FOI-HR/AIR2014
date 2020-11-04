@@ -19,7 +19,8 @@ import java.util.Timer;
 public class MainActivity extends AppCompatActivity {
 
     public Dialog dialog;
-
+    TextView printWarning;
+    BluetoothAdapter mBluetoothAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 if (!mBluetoothAdapter.isEnabled()) {
-                    TextView printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
+                    printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
                     printWarning.setText("Bluetooth Vam nije uključen, kako bi nastavili dalje koristiti aplikaciju uključite bluetooth pritiskom na tipku 'UKLJUČI'");
                     dialog.show();
                 }
@@ -46,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     GoToMainScreen();
                 }
             }
-        }, 2000);
+        }, 1000);
 
         Button btnOn = (Button) dialog.findViewById(R.id.btnTurnOn);
         btnOn.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +72,9 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode==RESULT_OK){
             GoToMainScreen();
         }else if(resultCode==RESULT_CANCELED){
-            TextView printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
+            printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
             printWarning.setText("Ukoliko ne dopustite uključivanje ili sami ne uključite Bluetooth, aplikacija ne može nastaviti s daljnjim radom.");
+            dialog.show();
         }
     }
 
