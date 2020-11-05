@@ -3,10 +3,13 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,18 +18,20 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
-
+    private static String sosNumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
+        sosNumber=sharedPreferences.getString("keySosNumbera","385112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -36,7 +41,16 @@ public class MainScreen extends AppCompatActivity  {
                 callSos(v);
             }
         });
+        //Idi na postavke gumb
+        FloatingActionButton btnSettings=findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener((View view)->{
+            OpenSettingsActivity();
+        });
+
+
+
     }
+    //Preference.OnPreferenceChangeListener()
 
 
     public void hideButton(View view) {
@@ -54,9 +68,30 @@ public class MainScreen extends AppCompatActivity  {
     }
 
     private void callSos(View view) {
-        String sosPhoneNumber = "tel:" + "+385112";
+        if(sosNumber=="")sosNumber="385221";
+        String sosPhoneNumber = "tel:" + sosNumber;
+        TextView tekst=findViewById(R.id.textView3);
+        tekst.setText(sosPhoneNumber);
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(sosPhoneNumber));
         startActivity(callIntent);
     }
+    private void OpenSettingsActivity()
+    {
+        Intent intentSettings=new Intent(this, SettingsActivity.class);
+        startActivity(intentSettings);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
+        FloatingActionButton sosButton=findViewById(R.id.btnSos);
+        Boolean toShowOrNotToShow=sharedPreferences.getBoolean("keySosOnOff",true);
+        if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
+        else sosButton.setVisibility(View.GONE);
+        sosNumber=sharedPreferences.getString("keySosNumbera","385112");
+    }
 }
+
+

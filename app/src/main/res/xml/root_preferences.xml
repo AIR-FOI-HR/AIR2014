@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/sosSettings">
+
+    </PreferenceCategory>
+    <SwitchPreference
+        android:id="@+id/idSosOnOff"
+        android:defaultValue="true"
+        android:key="keySosOnOff"
+        android:title="SOS (prikaži/sakri)" />
+    <EditTextPreference
+        android:id="@+id/idSosNumbera"
+        android:defaultValue="true"
+        android:key="keySosNumbera"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="SOS broj" />+
+
+
+</PreferenceScreen>

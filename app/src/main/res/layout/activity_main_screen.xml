@@ -5,6 +5,7 @@
     android:id="@+id/mainScreen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#52FFFFFF"
     tools:context=".MainScreen">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -31,6 +32,29 @@
         app:layout_constraintVertical_bias="0.928" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="20"
+        android:background="#52FFFFFF"
+        android:backgroundTint="#9A9A9A"
+        android:backgroundTintMode="src_in"
+        android:clickable="true"
+        android:contentDescription="@android:string/emptyPhoneNumber"
+        android:focusable="true"
+        android:src="@drawable/settings"
+        android:tint="#FFFFFF"
+        android:visibility="visible"
+        app:backgroundTint="#C4FFFFFF"
+        app:backgroundTintMode="add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.05" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnZvuk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -41,9 +65,9 @@
         android:clickable="true"
         android:contentDescription="@string/soundOn"
         android:focusable="true"
+        android:onClick="hideButton"
         android:src="@android:drawable/ic_lock_silent_mode_off"
         android:tint="#FFFFFF"
-        android:onClick="hideButton"
         android:visibility="visible"
         app:backgroundTint="#C4FFFFFF"
         app:backgroundTintMode="add"
@@ -65,10 +89,10 @@
         android:clickable="true"
         android:contentDescription="@string/soundOff"
         android:focusable="true"
+        android:onClick="showButton"
         android:src="@android:drawable/ic_lock_silent_mode"
         android:tint="#FFFFFF"
         android:visibility="gone"
-        android:onClick="showButton"
         app:backgroundTint="#C4FFFFFF"
         app:backgroundTintMode="add"
         app:layout_constraintBottom_toBottomOf="parent"

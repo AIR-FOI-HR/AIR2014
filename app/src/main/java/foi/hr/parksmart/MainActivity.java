@@ -29,33 +29,15 @@ public class MainActivity extends AppCompatActivity {
         ImageView myImageView = (ImageView) findViewById(R.id.imageView);
         myImageView.setImageResource(R.drawable.logo);
 
+        Dialog dialog = new Dialog(MainActivity.this);
+        dialog.setContentView(R.layout.bluetooth_message);
+        BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         new Handler().postDelayed(new Runnable() {
-            @Override
             public void run() {
                 BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                 if (!mBluetoothAdapter.isEnabled()) {
-                    Dialog dialog = new Dialog(MainActivity.this);
-                    dialog.setContentView(R.layout.bluetooth_message);
-                    dialog.setTitle("Poruka");
                     dialog.show();
-
-
-                    do{
-                        Button btnOn = (Button) dialog.findViewById(R.id.btnTurnOn);
-                        btnOn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-
-                            public void onClick(View v) {
-                                final int REQUEST_ENABLE_BT = 1;
-                                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                            }
-                        });
-                    }while(mBluetoothAdapter.isEnabled());
-
-
-                }
-                else{
+                }else{
                     Intent intent = new Intent(MainActivity.this, MainScreen.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
@@ -63,6 +45,24 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }, 1000);
+        Button btnOn = (Button) dialog.findViewById(R.id.btnTurnOn);
+        btnOn.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+                final int REQUEST_ENABLE_BT = 1;
+                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+
+                if(mBluetoothAdapter.isEnabled()){
+                    dialog.dismiss();
+                    Intent intent = new Intent(MainActivity.this, MainScreen.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+
+            }
+        });
 
     }
 }
