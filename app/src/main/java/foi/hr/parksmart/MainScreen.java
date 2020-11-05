@@ -3,10 +3,13 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.view.View.OnClickListener;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -41,8 +45,14 @@ public class MainScreen extends AppCompatActivity  {
         btnSettings.setOnClickListener((View view)->{
             OpenSettingsActivity();
         });
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
+        String tekstSos = sharedPreferences.getString("edit_text_preference_2","");
+        Boolean toShowOrNotToShow=sharedPreferences.getBoolean("keySosOnOff",true);
+
+
 
     }
+    //Preference.OnPreferenceChangeListener()
 
 
     public void hideButton(View view) {
@@ -71,3 +81,4 @@ public class MainScreen extends AppCompatActivity  {
         startActivity(intentSettings);
     }
 }
+

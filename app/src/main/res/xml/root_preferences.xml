@@ -5,10 +5,12 @@
 
     </PreferenceCategory>
     <SwitchPreference
+        android:id="@+id/idSosOnOff"
         android:defaultValue="true"
-        android:key="switch_preference_1"
+        android:key="keySosOnOff"
         android:title="SOS (prikaži/sakri)" />
     <EditTextPreference
+        android:id="@+id/idSosNumbera"
         android:defaultValue="Broj, programski(regex naprqaviti)"
         android:key="edit_text_preference_2"
         android:selectAllOnFocus="true"
