@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                     GoToMainScreen();
                 }
             }
-        }, 1000);
+        }, 1500);
 
         Button btnOn = (Button) dialog.findViewById(R.id.btnTurnOn);
         btnOn.setOnClickListener(new View.OnClickListener() {
