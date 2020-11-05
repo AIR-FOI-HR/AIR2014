@@ -22,8 +22,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
 
 
-
-
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()

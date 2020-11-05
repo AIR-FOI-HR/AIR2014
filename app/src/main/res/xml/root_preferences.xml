@@ -11,10 +11,8 @@
         android:title="SOS (prikaži/sakri)" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
-        android:defaultValue="true"
+        android:defaultValue="3380112"
         android:key="keySosNumbera"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
         android:title="SOS broj" />+
 
 
