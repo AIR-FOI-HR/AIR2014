@@ -14,6 +14,7 @@
         android:theme="@style/Theme.ParkSmart">
         <activity
             android:name=".SettingsActivity"
+            android:parentActivityName=".MainScreen"
             android:label="@string/title_activity_settings"></activity>
         <activity android:name=".MainScreen" />
         <activity android:name=".MainActivity">
