@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView greetings = (TextView) findViewById(R.id.textView);
-        greetings.setText("Dobro došli");
+        greetings.setText("Dobro došli!");
         ImageView myImageView = (ImageView) findViewById(R.id.imageView);
         myImageView.setImageResource(R.drawable.logo);
 
