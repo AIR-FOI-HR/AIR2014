@@ -70,8 +70,6 @@ public class MainScreen extends AppCompatActivity  {
     private void callSos(View view) {
         if(sosNumber=="")sosNumber="385221";
         String sosPhoneNumber = "tel:" + sosNumber;
-        TextView tekst=findViewById(R.id.textView3);
-        tekst.setText(sosPhoneNumber);
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         callIntent.setData(Uri.parse(sosPhoneNumber));
         startActivity(callIntent);
