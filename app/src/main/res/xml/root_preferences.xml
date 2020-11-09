@@ -11,9 +11,8 @@
         android:title="SOS (prikaži/sakri)" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
-        android:defaultValue="3380112"
+        android:defaultValue="112"
         android:key="keySosNumbera"
         android:title="SOS broj" />+
-
 
 </PreferenceScreen>

@@ -32,7 +32,7 @@ public class MainScreen extends AppCompatActivity  {
         setContentView(R.layout.activity_main_screen);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
        // if(sosNumber=="")sosNumber="+385112";
-        sosNumber=sharedPreferences.getString("keySosNumbera","+385112");
+        sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -89,7 +89,7 @@ public class MainScreen extends AppCompatActivity  {
         Boolean toShowOrNotToShow=sharedPreferences.getBoolean("keySosOnOff",true);
         if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
         else sosButton.setVisibility(View.GONE);
-        sosNumber=sharedPreferences.getString("keySosNumbera","+385112");
+        sosNumber=sharedPreferences.getString("keySosNumbera","112");
     }
 }
 
