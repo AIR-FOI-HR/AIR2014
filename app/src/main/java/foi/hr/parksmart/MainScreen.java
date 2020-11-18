@@ -34,6 +34,7 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
+
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
@@ -42,14 +43,12 @@ public class MainScreen extends AppCompatActivity  {
                 callSos(v);
             }
         });
+
         //Idi na postavke gumb
         FloatingActionButton btnSettings=findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener((View view)->{
             OpenSettingsActivity();
         });
-
-
-
     }
     //Preference.OnPreferenceChangeListener()
 

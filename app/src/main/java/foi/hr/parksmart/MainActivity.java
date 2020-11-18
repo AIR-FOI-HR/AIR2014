@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
             }
         });
-
     }
     /*
     Metoda onActivityResult(int requestCode, int resultCode, Intent data) poziva se nakon završavanja aktivonsti zahtjeva

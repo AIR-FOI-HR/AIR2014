@@ -13,6 +13,6 @@
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"
         android:key="keySosNumbera"
-        android:title="SOS broj" />+
+        android:title="SOS broj" />
 
 </PreferenceScreen>
