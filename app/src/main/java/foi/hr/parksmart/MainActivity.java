@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.bluetooth_message);
+        dialog.setCanceledOnTouchOutside(false);
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -77,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-    GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
-     */
+
     protected void GoToMainScreen(){
         Intent intent = new Intent(MainActivity.this, MainScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
