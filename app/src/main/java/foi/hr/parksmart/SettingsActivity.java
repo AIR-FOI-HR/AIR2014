@@ -40,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
     }
 
-    /*test komentar*/
+    
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
