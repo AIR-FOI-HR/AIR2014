@@ -61,6 +61,22 @@ public class SettingsActivity extends AppCompatActivity {
                 settingsAlert.setMessage("poruka");
                 settingsAlert.show();
 
+
         }
     };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.unregisterOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+    }
+
 }
