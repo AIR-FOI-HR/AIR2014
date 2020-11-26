@@ -11,6 +11,10 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.bluetooth.le.BluetoothLeScanner;
+import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanResult;
+import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -138,8 +142,20 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             //TODO: izvedi skreniranje
+
+
         }
     }
+
+    private final ScanCallback scanCallback = new ScanCallback() {
+        @Override
+        public void onScanResult(int callbackType, ScanResult result) {
+            super.onScanResult(callbackType, result);
+
+            Log.i("ScanCallback", result.getDevice().toString());
+
+        }
+    };
 
     private void requestLocationPermission(){
         if(isLocationPermissionGranted()){
@@ -180,9 +196,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return true;
     }
-
-
-
 
 
     //sve ispod je starom
