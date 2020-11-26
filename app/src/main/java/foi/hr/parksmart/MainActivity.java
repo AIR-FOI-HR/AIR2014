@@ -1,15 +1,24 @@
 package foi.hr.parksmart;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -27,9 +36,13 @@ import java.util.Timer;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
+
+
     public Dialog dialog;
     TextView printWarning;
-    BluetoothAdapter mBluetoothAdapter;
+    private BluetoothAdapter mBluetoothAdapter;
 
 
     @Override
@@ -48,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
 
+        /*
         new Handler().postDelayed(new Runnable() {
             public void run() {
                 //mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -72,16 +86,114 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        */
     }
 
+    //sve iznad je staro
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!mBluetoothAdapter.isEnabled()){
+            promptEnableBluetooth();
+        }
+
+        startBleScan();
+    }
+
+    private void promptEnableBluetooth() {
+        if (!mBluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(mBluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE);
+        }
+    }
+
+    //sluzi kao looper za konstantni prikaz popupa za ukljucivanje BT-a,
+    //sve dok ga korisnik ne ukljuci
+    protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ENABLE_BLUETOOTH_REQUEST_CODE) {
+            if (resultCode != Activity.RESULT_OK) {
+                promptEnableBluetooth();
+            }
+        }
+    }
+
+
+    private boolean isLocationPermissionGranted()
+    {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED){
+            return true;
+        }
+        else {
+            return  false;
+        }
+    }
+
+    private void startBleScan()
+    {
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) && !isLocationPermissionGranted()){
+            requestLocationPermission();
+        }
+        else {
+            //TODO: izvedi skreniranje
+        }
+    }
+
+    private void requestLocationPermission(){
+        if(isLocationPermissionGranted()){
+            return;
+        }
+        new AlertDialog.Builder(MainActivity.this)
+                .setTitle("Lokacija je obavezna za BLE skeniranje.")
+                .setMessage("Molimo dozvolite pristup lokaciji.")
+                .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);
+                    }
+                })
+                .create()
+                .show();
+    }
+
+    //sluzi kao looper za konstantni prikaz popupa za ukljucivanje lokacije,
+    //sve dok ju korisnik ne ukljuci
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
+            if (hasAllPermissionsGranted(grantResults)) {
+                startBleScan();
+            } else {
+                requestLocationPermission();
+            }
+        }
+    }
+
+    public boolean hasAllPermissionsGranted(@NonNull int[] grantResults) {
+        for (int grantResult : grantResults) {
+            if (grantResult == PackageManager.PERMISSION_DENIED) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+
+
+    //sve ispod je starom
+
     /*
-    Metoda onActivityResult(int requestCode, int resultCode, Intent data) poziva se nakon završavanja aktivonsti zahtjeva
-    requestCode - označava stanje početnog zahtjeva
-    resultCode - što vraća zahtjev
-    data - dodatana podatak ukoliko postoji
-    provjerava vraćeni zahtjev i izvršava jedan od IF uvjeta
-     */
+        Metoda onActivityResult(int requestCode, int resultCode, Intent data) poziva se nakon završavanja aktivonsti zahtjeva
+        requestCode - označava stanje početnog zahtjeva
+        resultCode - što vraća zahtjev
+        data - dodatana podatak ukoliko postoji
+        provjerava vraćeni zahtjev i izvršava jedan od IF uvjeta
+
     protected  void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode,resultCode,data);
         if(resultCode==RESULT_OK){
