@@ -2,7 +2,7 @@
 
 #define sensorSignal 4//6
 int minSignal = 100, maxSignal = 0;
-
+byte signal[5];
 void GetSignalDigital()
 {
   long int time = micros();
@@ -58,6 +58,15 @@ void setup()
 
 void loop()
 {
+  
+  if(pulseIn(sensorSignal,HIGH)>1000)
+  {
+    for(int i=0;i<33;i++)signal[i]=pulseIn(sensorSignal,HIGH);
+    
+  }
+  for(int i=0;i<33;i++)Serial.println(signal[i]);
+  Serial.println("--------------------------------------------");
+  
   //  if (digitalRead(sensorSignal) == HIGH)Serial.print("1");
   //  else {
   //    Serial.print(" ");
@@ -66,7 +75,7 @@ void loop()
   //GetSignalDigital();
   //GetSignalAnalog();
   //Serial.println(analogRead(sensorSignal));
-  Serial.println(pulseInLong(sensorSignal,HIGH));
+  //Serial.println(pulseInLong(sensorSignal,HIGH));
   //Serial.print(" ");
   //Serial.println(pulseInLong(sensorSignal,LOW));
 
