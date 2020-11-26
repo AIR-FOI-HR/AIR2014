@@ -13,6 +13,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
+import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.content.Context;
@@ -34,6 +35,7 @@ import android.widget.TextView;
 
 import com.welie.blessed.BluetoothCentral;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 
@@ -141,9 +143,24 @@ public class MainActivity extends AppCompatActivity {
             requestLocationPermission();
         }
         else {
-            //TODO: izvedi skreniranje
+            BluetoothLeScanner bleScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
+            List<ScanFilter> scanFilters = new ArrayList<>();
+            ScanFilter scanFilter = new ScanFilter.Builder()
+                    .setDeviceName("SmartPark_Centar_Unit")
+                    .build();
+            scanFilters.add(scanFilter);
 
+            ScanSettings scanSettings = new ScanSettings.Builder()
+                    .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                    .build();
+
+            if (bleScanner != null) {
+                bleScanner.startScan(scanFilters, scanSettings, scanCallback);
+                Log.d("ScanInfo", "scan started");
+            }  else {
+                Log.e("ScanInfo", "could not get scanner object");
+            }
         }
     }
 
@@ -152,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
 
-            Log.i("ScanCallback", result.getDevice().toString());
+            Log.i("ScanCallback", result.getDevice().getName());
 
         }
     };
