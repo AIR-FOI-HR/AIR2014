@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,14 +28,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView greetings = (TextView) findViewById(R.id.textView);
-        greetings.setText("Dobro došli!");
+
+        //TextView greetings = (TextView) findViewById(R.id.textView);
+        //greetings.setText("Dobro došli!");
         ImageView myImageView = (ImageView) findViewById(R.id.imageView);
         myImageView.setImageResource(R.drawable.logo);
+
+
 
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.bluetooth_message);
         dialog.setCanceledOnTouchOutside(false);
+
+
 
         new Handler().postDelayed(new Runnable() {
             public void run() {
@@ -85,4 +91,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+
 }

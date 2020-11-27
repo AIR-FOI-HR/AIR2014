@@ -90,6 +90,7 @@ public class MainScreen extends AppCompatActivity  {
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
     }
+
 }
 
 

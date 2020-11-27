@@ -8,11 +8,13 @@
         android:id="@+id/idSosOnOff"
         android:defaultValue="true"
         android:key="keySosOnOff"
-        android:title="SOS (sakri/prikaži)" />
+        android:title="@string/SOS_prikaz" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"
         android:key="keySosNumbera"
-        android:title="SOS broj" />
+        android:negativeButtonText="@string/NegativeButton"
+        android:positiveButtonText="@string/PositiveButton"
+        android:title="@string/SOS_broj" />
 
 </PreferenceScreen>

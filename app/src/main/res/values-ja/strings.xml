@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">ParkSmart</string>
-    <string name="soundOn" translatable="false" />
-    <string name="soundOff" translatable="false" />
-    <string name="mainScreenCar" translatable="false" />
-    <string name="welcomeText">Welcome</string>
-    <string name="title_activity_settings">Settings</string>
+    <string name="soundOn" />
+    <string name="soundOff" />
+    <string name="mainScreenCar" />
+    <string name="welcomeText">ようこそ</string>
+    <string name="title_activity_settings">設定</string>
 
     <!-- Preference Titles -->
-    <string name="settings_header">Settings</string>
-    <string name="sosSettings">SOS settings</string>
-    <string name="soundSettings">Sound settings</string>
+    <string name="settings_header">設定</string>
+    <string name="sosSettings">SOS 設定</string>
+    <string name="soundSettings">サウンド設定</string>
     <string name="sync_header">Sync</string>
 
     <!-- Messages Preferences -->
@@ -22,9 +22,8 @@
     <string name="attachment_summary_on">Automatically download attachments for incoming emails
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
-
-    <string name="SOS_broj">SOS number</string>
-    <string name="SOS_prikaz">SOS (Show/Hide)</string>
-    <string name="NegativeButton">Cancel</string>
-    <string name="PositiveButton">OK</string>
+    <string name="SOS_broj">SOS 番号</string>
+    <string name="SOS_prikaz">SOS (表示/非表示)</string>
+    <string name="PositiveButton">はい</string>
+    <string name="NegativeButton">キャンセル</string>
 </resources>
