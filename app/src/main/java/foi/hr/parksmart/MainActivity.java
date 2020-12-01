@@ -1,9 +1,12 @@
 package foi.hr.parksmart;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
@@ -38,8 +41,9 @@ import com.welie.blessed.BluetoothCentral;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
+import java.util.stream.Collectors;
 
-
+@RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity {
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
@@ -49,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
     public Dialog dialog;
     TextView printWarning;
     private BluetoothAdapter mBluetoothAdapter;
+    RecyclerView recyclerView;
+    Adapter adapter;
+    ArrayList<String> deviceName = new ArrayList<>();;
+    ArrayList<String> deviceAddress = new ArrayList<>();;
+    List<String> filterName;
+    List<String> filterAddress;
 
 
     @Override
@@ -170,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
             super.onScanResult(callbackType, result);
 
             Log.i("ScanCallback", result.getDevice().getName());
+            deviceName.add(result.getDevice().getName());
+            deviceAddress.add(result.getDevice().getAddress());
 
         }
     };
@@ -214,6 +226,15 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    private void showRecyclerView() {
+        filterName = deviceName.stream().distinct().collect(Collectors.toList());
+        // treba pogledati vraća li dobre MAC adrese od pojedinog uređaja ili treba napraviti metodu
+        filterAddress = deviceAddress.stream().distinct().collect(Collectors.toList());
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(this,deviceName,deviceAddress);
+        recyclerView.setAdapter(adapter);
+    }
 
     //sve ispod je starom
 
