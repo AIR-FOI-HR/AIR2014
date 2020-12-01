@@ -22,29 +22,20 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
-import com.welie.blessed.BluetoothCentral;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 import java.util.stream.Collectors;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener {
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
@@ -61,10 +52,22 @@ public class MainActivity extends AppCompatActivity {
     List<String> filterAddress;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        deviceName.add("Nešto nešto");
+        deviceName.add(" nešto");
+        deviceName.add("Neštoešto");
+        deviceAddress.add("1232142412412");
+        deviceAddress.add("32141244214");
+        deviceAddress.add("512141241241");
+
+
+
+
 
         TextView greetings = (TextView) findViewById(R.id.textView);
         greetings.setText("Dobro došli!");
@@ -73,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.bluetooth_message);
+
 
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
@@ -103,6 +107,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         */
+    }
+
+
+    private void showRecyclerView() {
+        filterName = deviceName.stream().distinct().collect(Collectors.toList());
+        // treba pogledati vraća li dobre MAC adrese od pojedinog uređaja ili treba napraviti metodu
+        filterAddress = deviceAddress.stream().distinct().collect(Collectors.toList());
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(this,deviceName,deviceAddress,this);
+        recyclerView.setAdapter(adapter);
     }
 
     //sve iznad je staro
@@ -157,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
             List<ScanFilter> scanFilters = new ArrayList<>();
             ScanFilter scanFilter = new ScanFilter.Builder()
-                    .setDeviceName("SmartPark_Centar_Unit")
+                    .setDeviceName("Makeblock_LE")
                     .build();
             scanFilters.add(scanFilter);
 
@@ -166,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     .build();
 
             if (bleScanner != null) {
-                bleScanner.startScan(scanFilters, scanSettings, scanCallback);
+                bleScanner.startScan(null, scanSettings, scanCallback);
                 Log.d("ScanInfo", "scan started");
             }  else {
                 Log.e("ScanInfo", "could not get scanner object");
@@ -175,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private final ScanCallback scanCallback = new ScanCallback() {
+
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
@@ -182,6 +198,8 @@ public class MainActivity extends AppCompatActivity {
             Log.i("ScanCallback", result.getDevice().getName());
             deviceName.add(result.getDevice().getName());
             deviceAddress.add(result.getDevice().getAddress());
+
+
 
         }
     };
@@ -226,15 +244,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void showRecyclerView() {
-        filterName = deviceName.stream().distinct().collect(Collectors.toList());
-        // treba pogledati vraća li dobre MAC adrese od pojedinog uređaja ili treba napraviti metodu
-        filterAddress = deviceAddress.stream().distinct().collect(Collectors.toList());
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,deviceName,deviceAddress);
-        recyclerView.setAdapter(adapter);
+    @Override
+    public void onBluetoothDeviceClick(int position) {
+        Log.i("BluetoothDeviceClick", filterName.get(position));
+        // stavi povezivanje s uređajem
+
     }
+
 
     //sve ispod je starom
 
@@ -258,11 +274,11 @@ public class MainActivity extends AppCompatActivity {
 
     /*
     GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
-     */
+     *//*
     protected void GoToMainScreen(){
         Intent intent = new Intent(MainActivity.this, MainScreen.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-    }
+    }*/
 }

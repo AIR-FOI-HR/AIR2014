@@ -15,11 +15,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private List<String> deviceName;
     private List<String> deviceAddress;
+    private OnBluetoothDeviceListener mOnBluetoothDeviceListener;
 
-    public Adapter(Context context, List<String> deviceName, List<String> deviceAddress) {
+    public Adapter(Context context, List<String> deviceName, List<String> deviceAddress, OnBluetoothDeviceListener onBluetoothDeviceListener) {
         this.layoutInflater = LayoutInflater.from(context);
         this.deviceName = deviceName;
         this.deviceAddress = deviceAddress;
+        this.mOnBluetoothDeviceListener=onBluetoothDeviceListener;
     }
 
     @NonNull
@@ -27,7 +29,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = layoutInflater.inflate(R.layout.bluetooth_device_list_custom_view, parent, false);
 
-        return new ViewHolder(view);
+        return new ViewHolder(view,mOnBluetoothDeviceListener);
     }
 
     @Override
@@ -43,14 +45,25 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return deviceName.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView txtDeviceName,txtDeviceAddress;
-        public ViewHolder(@NonNull View itemView) {
+        OnBluetoothDeviceListener onBluetoothDeviceListener;
+        public ViewHolder(@NonNull View itemView, OnBluetoothDeviceListener onBluetoothDeviceListener) {
             super(itemView);
             txtDeviceName=(TextView) itemView.findViewById(R.id.txt_device_name);
             txtDeviceAddress=(TextView) itemView.findViewById(R.id.txt_MAC_address);
+            this.onBluetoothDeviceListener=onBluetoothDeviceListener;
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            onBluetoothDeviceListener.onBluetoothDeviceClick(getAdapterPosition());
         }
     }
 
+    public interface OnBluetoothDeviceListener {
+        void onBluetoothDeviceClick(int position);
+    }
 }
