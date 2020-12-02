@@ -1,6 +1,8 @@
 package foi.hr.parksmart;
 
+import android.bluetooth.BluetoothDevice;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,18 +11,23 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private List<String> deviceName;
-    private List<String> deviceAddress;
+    private List<String> deviceName = new ArrayList<>();
+    private List<String> deviceAddress = new ArrayList<>();
     private OnBluetoothDeviceListener mOnBluetoothDeviceListener;
 
-    public Adapter(Context context, List<String> deviceName, List<String> deviceAddress, OnBluetoothDeviceListener onBluetoothDeviceListener) {
+    public Adapter(Context context, List<BluetoothDevice> bleDevices, OnBluetoothDeviceListener onBluetoothDeviceListener) {
         this.layoutInflater = LayoutInflater.from(context);
-        this.deviceName = deviceName;
-        this.deviceAddress = deviceAddress;
+        for (BluetoothDevice bleDevice : bleDevices)
+        {
+            deviceName.add(bleDevice.getName());
+            deviceAddress.add(bleDevice.getAddress());
+        }
+
         this.mOnBluetoothDeviceListener=onBluetoothDeviceListener;
     }
 
@@ -59,6 +66,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
+            //Log.i("onClick", "radi");
             onBluetoothDeviceListener.onBluetoothDeviceClick(getAdapterPosition());
         }
     }

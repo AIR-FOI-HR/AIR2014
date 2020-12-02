@@ -13,6 +13,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
@@ -32,7 +33,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Timer;
+import java.util.TimerTask;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener {
@@ -46,28 +48,13 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     private BluetoothAdapter mBluetoothAdapter;
     RecyclerView recyclerView;
     Adapter adapter;
-    ArrayList<String> deviceName = new ArrayList<>();;
-    ArrayList<String> deviceAddress = new ArrayList<>();;
-    List<String> filterName;
-    List<String> filterAddress;
-
-
+    ArrayList<BluetoothDevice> bleDevices = new ArrayList<>();;
+    BluetoothLeScanner bleScanner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        deviceName.add("Nešto nešto");
-        deviceName.add(" nešto");
-        deviceName.add("Neštoešto");
-        deviceAddress.add("1232142412412");
-        deviceAddress.add("32141244214");
-        deviceAddress.add("512141241241");
-
-
-
-
 
         TextView greetings = (TextView) findViewById(R.id.textView);
         greetings.setText("Dobro došli!");
@@ -111,12 +98,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
 
     private void showRecyclerView() {
-        filterName = deviceName.stream().distinct().collect(Collectors.toList());
-        // treba pogledati vraća li dobre MAC adrese od pojedinog uređaja ili treba napraviti metodu
-        filterAddress = deviceAddress.stream().distinct().collect(Collectors.toList());
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,deviceName,deviceAddress,this);
+        adapter = new Adapter(this, bleDevices,this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -129,7 +113,10 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             promptEnableBluetooth();
         }
 
-        startBleScan();
+        if (bleDevices.isEmpty());{
+            startBleScan();
+
+        }
     }
 
     private void promptEnableBluetooth() {
@@ -168,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             requestLocationPermission();
         }
         else {
-            BluetoothLeScanner bleScanner = mBluetoothAdapter.getBluetoothLeScanner();
+            bleScanner = mBluetoothAdapter.getBluetoothLeScanner();
 
             List<ScanFilter> scanFilters = new ArrayList<>();
             ScanFilter scanFilter = new ScanFilter.Builder()
@@ -189,6 +176,17 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         }
     }
 
+    private void stopBleScan() {
+        /*
+        zato jer bi se teoretski tu metodu moglo pozvati i
+        prije nego je uopce skeniranje pokrenetu,
+        tj. kad bleScanner objekt nije inicijaliziran
+        */
+        if(bleScanner != null){
+            bleScanner.stopScan(scanCallback);
+        }
+    }
+
     private final ScanCallback scanCallback = new ScanCallback() {
 
         @Override
@@ -196,11 +194,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             super.onScanResult(callbackType, result);
 
             Log.i("ScanCallback", result.getDevice().getName());
-            deviceName.add(result.getDevice().getName());
-            deviceAddress.add(result.getDevice().getAddress());
+            if(!bleDevices.contains(result.getDevice()))
+                bleDevices.add(result.getDevice());
 
-
-
+            if(bleDevices.size() != 0)
+                showRecyclerView();
         }
     };
 
@@ -246,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     @Override
     public void onBluetoothDeviceClick(int position) {
-        Log.i("BluetoothDeviceClick", filterName.get(position));
+        Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
         // stavi povezivanje s uređajem
 
     }
