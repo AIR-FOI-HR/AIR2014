@@ -26,6 +26,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -115,8 +116,17 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
         if (bleDevices.isEmpty());{
             startBleScan();
-
         }
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                stopBleScan();
+
+                if(bleDevices.size() != 0)
+                    showRecyclerView();
+            }
+        }, 10000);
     }
 
     private void promptEnableBluetooth() {
@@ -196,9 +206,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             Log.i("ScanCallback", result.getDevice().getName());
             if(!bleDevices.contains(result.getDevice()))
                 bleDevices.add(result.getDevice());
-
-            if(bleDevices.size() != 0)
-                showRecyclerView();
         }
     };
 
