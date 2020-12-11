@@ -117,6 +117,24 @@ public class MainScreen extends AppCompatActivity  {
         return new UUID(MSB | (value << 32), LSB);
     }
 
+    String byteArrayToString(byte[] in) {
+        char out[] = new char[in.length * 2];
+        for (int i = 0; i < in.length; i++) {
+            out[i * 2] = "0123456789ABCDEF".charAt((in[i] >> 4) & 15);
+            out[i * 2 + 1] = "0123456789ABCDEF".charAt(in[i] & 15);
+        }
+        return new String(out);
+    }
+
+    String hexToString(String hex){
+        StringBuilder output = new StringBuilder();
+        for (int i = 0; i < hex.length(); i+=2) {
+            String str = hex.substring(i, i+2);
+            output.append((char)Integer.parseInt(str, 16));
+        }
+        return new String(output);
+    }
+
     //Bluetooth connection
     private void EstablishConnection() {
         if(bleDevice != null){
@@ -130,10 +148,18 @@ public class MainScreen extends AppCompatActivity  {
                             gatt.discoverServices();
                         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                             Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
+                            /*TODO treba prikazati poruku na zaslonu da je uređaj disconnectan (razlog je isključivanje Bluetootha
+                               na mobitelu) i tražiti od korisnika da upali Bluetooth i
+                               pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
+                                nakon čega se ponovno poziva funkcija EstablishConnection()
+                            * */
                             gatt.close();
                         }
                     } else {
                         Log.w("BluetoothGattCallback", "Error $status encountered for $deviceAddress! Disconnecting...");
+                        /* TODO ista stvar kao i prethodni TODO samo što razlog nije isključivanje Bluetootha nego
+                            isključivanje BLE servera (ESP32 mikrokontrolera) ili neka druga greška
+                         */
                         gatt.close();
                     }
                 }
@@ -146,6 +172,12 @@ public class MainScreen extends AppCompatActivity  {
                         //printGattTable() // See implementation just above this section
                         setNotifications(gatt);
                     }
+                }
+                @Override
+                public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+                    super.onCharacteristicChanged(gatt, characteristic);
+                    //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
+                    Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));
                 }
             };
             BluetoothGatt gatt = bleDevice.connectGatt(this, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
