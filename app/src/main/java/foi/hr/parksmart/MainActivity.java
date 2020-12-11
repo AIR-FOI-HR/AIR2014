@@ -65,37 +65,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.bluetooth_message);
+        dialog.setCanceledOnTouchOutside(false);
 
 
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
-
-        /*
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                //mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                if (!mBluetoothAdapter.isEnabled()) {
-                    printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
-                    printWarning.setText("Bluetooth Vam nije uključen, kako bi nastavili dalje koristiti aplikaciju uključite bluetooth pritiskom na tipku 'UKLJUČI'");
-                    dialog.show();
-                }
-                else{
-                    //GoToMainScreen();
-                }
-            }
-        }, 1500);
-
-        Button btnOn = (Button) dialog.findViewById(R.id.btnTurnOn);
-        btnOn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                final int REQUEST_ENABLE_BT = 1;
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-
-            }
-        });
-        */
     }
 
 
@@ -105,8 +79,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         adapter = new Adapter(this, bleDevices,this);
         recyclerView.setAdapter(adapter);
     }
-
-    //sve iznad je staro
 
     @Override
     protected void onResume() {
@@ -258,28 +230,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         // stavi povezivanje s uređajem
 
     }
-
-
-    //sve ispod je starom
-
-    /*
-        Metoda onActivityResult(int requestCode, int resultCode, Intent data) poziva se nakon završavanja aktivonsti zahtjeva
-        requestCode - označava stanje početnog zahtjeva
-        resultCode - što vraća zahtjev
-        data - dodatana podatak ukoliko postoji
-        provjerava vraćeni zahtjev i izvršava jedan od IF uvjeta
-
-    protected  void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode==RESULT_OK){
-            //GoToMainScreen();
-        }else if(resultCode==RESULT_CANCELED){
-            printWarning = (TextView) dialog.findViewById(R.id.txtWarning);
-            printWarning.setText("Ukoliko ne dopustite uključivanje ili sami ne uključite Bluetooth, aplikacija ne može nastaviti s daljnjim radom.");
-            dialog.show();
-        }
-    }
-    */
 
     // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 

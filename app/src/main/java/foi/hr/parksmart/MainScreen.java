@@ -36,7 +36,7 @@ public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
-    // UUIDs for the Distance service (BLP)
+    // UUIDs for the Distance service
     private static final UUID ESP32_SERVICE_UUID = UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
     private static final UUID ESP32_CHARACTERISTIC_UUID = UUID.fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
@@ -52,6 +52,7 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
+
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
@@ -60,6 +61,7 @@ public class MainScreen extends AppCompatActivity  {
                 callSos(v);
             }
         });
+
         //Idi na postavke gumb
         FloatingActionButton btnSettings=findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener((View view)->{
