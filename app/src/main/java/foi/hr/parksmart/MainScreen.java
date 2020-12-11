@@ -36,6 +36,10 @@ public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
+    // UUIDs for the Distance service (BLP)
+    private static final UUID ESP32_SERVICE_UUID = UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
+    private static final UUID ESP32_CHARACTERISTIC_UUID = UUID.fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
+    private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
@@ -106,6 +110,13 @@ public class MainScreen extends AppCompatActivity  {
         startActivity(intentSettings);
     }
 
+    public UUID convertFromInteger(int i) {
+        final long MSB = 0x0000000000001000L;
+        final long LSB = 0x800000805f9b34fbL;
+        long value = i & 0xFFFFFFFF;
+        return new UUID(MSB | (value << 32), LSB);
+    }
+
     //Bluetooth connection
     private void EstablishConnection() {
         if(bleDevice != null){
@@ -126,10 +137,40 @@ public class MainScreen extends AppCompatActivity  {
                         gatt.close();
                     }
                 }
+
+                @Override
+                public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+                    super.onServicesDiscovered(gatt, status);
+                    if(gatt != null){
+                        Log.w("BluetoothGattCallback", "Discovered ${services.size} services for ${device.address}");
+                        //printGattTable() // See implementation just above this section
+                        setNotifications(gatt);
+                    }
+                }
             };
             BluetoothGatt gatt = bleDevice.connectGatt(this, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
         }
     }
+
+    private void setNotifications(BluetoothGatt gatt) {
+        BluetoothGattService distanceService = gatt.getService(ESP32_SERVICE_UUID);
+        if (distanceService != null) {
+            BluetoothGattCharacteristic distanceCharacteristic = distanceService.getCharacteristic(ESP32_CHARACTERISTIC_UUID);
+            if (distanceCharacteristic != null & isNotifiable(distanceCharacteristic)) {
+                gatt.setCharacteristicNotification(distanceCharacteristic, true);
+
+                BluetoothGattDescriptor descriptor = distanceCharacteristic.getDescriptor(ESP32_CHAR_DESRIPTOR_UUID);
+                descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                gatt.writeDescriptor(descriptor);
+            }
+        }
+    }
+
+    private boolean isNotifiable(BluetoothGattCharacteristic characteristic) {
+        return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
+    }
+
+
 }
 
 
