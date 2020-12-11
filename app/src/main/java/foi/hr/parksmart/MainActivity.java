@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener {
@@ -169,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
             List<ScanFilter> scanFilters = new ArrayList<>();
             ScanFilter scanFilter = new ScanFilter.Builder()
-                    .setDeviceName("Makeblock_LE")
+                    .setDeviceName("SmartPark_Centar_Unit")
                     .build();
             scanFilters.add(scanFilter);
 
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
                     .build();
 
             if (bleScanner != null) {
-                bleScanner.startScan(null, scanSettings, scanCallback);
+                bleScanner.startScan(scanFilters, scanSettings, scanCallback);
                 Log.d("ScanInfo", "scan started");
             }  else {
                 Log.e("ScanInfo", "could not get scanner object");
@@ -251,7 +252,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     @Override
     public void onBluetoothDeviceClick(int position) {
-        Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
+        //Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
+        GoToMainScreen(bleDevices.get(position));
+
         // stavi povezivanje s uređajem
 
     }
@@ -276,14 +279,15 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             dialog.show();
         }
     }
+    */
 
-    /*
-    GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
-     *//*
-    protected void GoToMainScreen(){
+    // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
+
+    protected void GoToMainScreen(BluetoothDevice bleDevice){
         Intent intent = new Intent(MainActivity.this, MainScreen.class);
+        intent.putExtra("BLE_DEVICE", bleDevice);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
-    }*/
+    }
 }
