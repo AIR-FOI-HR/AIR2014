@@ -7,8 +7,8 @@
     <color name="dark_blue_700">#114B6A</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background">#f2f2f2</color>
-    <color name="cardBackgroundColor">#e6e6e6</color>
-    <color name="textColor">#000000</color>
-    <color name="backgroundTint">#000000</color>
+    <color name="background">#303030</color>
+    <color name="cardBackgroundColor">#424242</color>
+    <color name="textColor">#FFFFFFFF</color>
+    <color name="backgroundTint">#FFFFFFFF</color>
 </resources>

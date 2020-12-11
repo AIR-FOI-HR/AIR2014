@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
@@ -38,6 +39,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+
+        SharedPreferences sharedPreferences
+                = getSharedPreferences(
+                "sharedPrefs", MODE_PRIVATE);
+        final SharedPreferences.Editor editor
+                = sharedPreferences.edit();
+
     }
 
     
@@ -70,6 +78,13 @@ public class SettingsActivity extends AppCompatActivity {
                     AlertDialog.Builder settingsAlert= new AlertDialog.Builder(SettingsActivity.this);
                     settingsAlert.setMessage("Format unesenog broja nije ispravan !");
                     settingsAlert.show();
+                }
+                Boolean darkMode = sharedPreferences.getBoolean("keyDarkMode",false);
+                if(darkMode){
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+                else{
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
         }
     };
