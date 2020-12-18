@@ -34,9 +34,8 @@ void setup() {
   pinMode(sensorSignal, INPUT);
 
   //Kreiranje BLE Devicea unoson imena BT uređaja
-  BLEDevice::init("SmartPark_Centar_Unit");\
-  BLEDevice::setMTU(100);
-
+  BLEDevice::init("SmartPark_Centar_Unit");
+  
   //Kreiranje BLE Server objekta
   BLEServer *pServer = BLEDevice::createServer();
   pServer->setCallbacks(new MyServerCallbacks());
@@ -137,7 +136,7 @@ void loop()
     pCharacteristic->notify();
    Serial.println("Trenutna vrijednost: " + String(buf));
   }
-  delay(50);
+  delay(100);
 
 
 }
