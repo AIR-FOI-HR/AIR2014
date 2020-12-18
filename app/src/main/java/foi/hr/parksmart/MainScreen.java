@@ -36,6 +36,10 @@ public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
+    //BLE MTU size
+    //payload size = MTU - 3
+    private static final int GATT_MAX_MTU_SIZE = 46;
+
     // UUIDs for the Distance service
     private static final UUID ESP32_SERVICE_UUID = UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
     private static final UUID ESP32_CHARACTERISTIC_UUID = UUID.fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
@@ -147,7 +151,8 @@ public class MainScreen extends AppCompatActivity  {
                     if (status == BluetoothGatt.GATT_SUCCESS) {
                         if (newState == BluetoothProfile.STATE_CONNECTED) {
                             Log.w("BluetoothGattCallback", "Successfully connected to $deviceAddress");
-                            gatt.discoverServices();
+                            Boolean stat = gatt.requestMtu(GATT_MAX_MTU_SIZE);
+                            Log.i("MTUstat", stat.toString());
                         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                             Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
                             /*TODO treba prikazati poruku na zaslonu da je uređaj disconnectan (razlog je isključivanje Bluetootha
@@ -180,6 +185,18 @@ public class MainScreen extends AppCompatActivity  {
                     super.onCharacteristicChanged(gatt, characteristic);
                     //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
                     Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));
+                }
+                @Override
+                public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                    super.onMtuChanged(gatt, mtu, status);
+                    String logStatus = mtu + " status = ";
+                    if(status == BluetoothGatt.GATT_SUCCESS){
+                        Log.i("MTU changed: ", logStatus+"uspjesno");
+                        gatt.discoverServices();
+                    }
+                    else{
+                        Log.i("MTU changed: ", logStatus+"neuspjeno");
+                    }
                 }
             };
             BluetoothGatt gatt = bleDevice.connectGatt(this, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
