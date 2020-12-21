@@ -102,10 +102,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.928" />
 
+
     <ImageView
         android:id="@+id/mainCar"
-        android:layout_width="239dp"
-        android:layout_height="363dp"
+        android:layout_width="195dp"
+        android:layout_height="255dp"
         android:layout_marginStart="70dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="70dp"
@@ -114,10 +115,46 @@
         android:contentDescription="@string/mainScreenCar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.684"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.404"
+        app:layout_constraintVertical_bias="0.125"
         app:srcCompat="@drawable/auto" />
+
+    <ImageView
+        android:id="@+id/idSenzorLvl3"
+        android:layout_width="356dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/senzor1lvl3" />
+
+    <ImageView
+        android:id="@+id/idSenzorLvl2"
+        android:layout_width="356dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+
+        app:srcCompat="@drawable/senzor1lvl2" />
+
+    <ImageView
+        android:id="@+id/idSenzorLvl1"
+        android:layout_width="356dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="104dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.29"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/senzor1lvl1" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
