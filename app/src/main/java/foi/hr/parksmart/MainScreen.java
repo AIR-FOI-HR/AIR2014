@@ -270,7 +270,7 @@ public class MainScreen extends AppCompatActivity  {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
 
-    private 
+
 
 
 
