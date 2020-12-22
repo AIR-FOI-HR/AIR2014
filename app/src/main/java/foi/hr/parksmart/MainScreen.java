@@ -47,8 +47,9 @@ public class MainScreen extends AppCompatActivity  {
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
-    List<Integer> boje = new ArrayList<Integer>();
-    ImageView senzor1,senzor2;
+
+    private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
+            ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +59,20 @@ public class MainScreen extends AppCompatActivity  {
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
 
-        senzor1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
-        senzor2 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
+        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
+        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
+        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
+        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
+        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
+        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
+        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
+        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
+        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
+        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
+        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
+        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
+
+
 
         Thread thread = new Thread() {
 
@@ -67,30 +80,39 @@ public class MainScreen extends AppCompatActivity  {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                int orange = Color.parseColor("#f59942");
+                                int yellow = Color.parseColor("#f5f242");
+                                int red = Color.parseColor("#f70000");
                                 int min = 1;
-                                int max = 5;
-
+                                int max = 15;
                                 Random r = new Random();
                                 int random = r.nextInt(max - min + 1) + min;
                                 Log.d("random", String.valueOf(random));
-                                if(random==1) {
-                                    int color = Color.parseColor("#AE6118");
-                                    senzor1.setColorFilter(color);
-                                    senzor2.setColorFilter(color);
+                                if(random>=1 && random <=5 ) {
+
+                                    senzor1lvl1.setColorFilter(yellow);
+                                    senzor2lvl1.setColorFilter(yellow);
+                                    senzor3lvl1.setColorFilter(yellow);
+                                    senzor4lvl1.setColorFilter(yellow);
+
                                 }
-                                if(random==2){
-                                    int color = Color.parseColor("#660066");
-                                    senzor1.setColorFilter(color);
-                                    senzor2.setColorFilter(color);
+                                if(random>=6 && random <=10){
+
+                                    senzor1lvl2.setColorFilter(orange);
+                                    senzor2lvl2.setColorFilter(orange);
+                                    senzor3lvl2.setColorFilter(orange);
+                                    senzor4lvl2.setColorFilter(orange);
                                 }
-                                if(random==3){
-                                    int color = Color.parseColor("#ff99cc");
-                                    senzor1.setColorFilter(color);
-                                    senzor2.setColorFilter(color);
+                                if(random>10){
+
+                                    senzor1lvl3.setColorFilter(red);
+                                    senzor2lvl3.setColorFilter(red);
+                                    senzor3lvl3.setColorFilter(red);
+                                    senzor4lvl3.setColorFilter(red);
                                 }
                             }
                         });
