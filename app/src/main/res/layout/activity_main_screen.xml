@@ -103,58 +103,139 @@
         app:layout_constraintVertical_bias="0.928" />
 
 
-    <ImageView
-        android:id="@+id/mainCar"
-        android:layout_width="195dp"
-        android:layout_height="255dp"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="50dp"
-        android:background="@null"
-        android:contentDescription="@string/mainScreenCar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.684"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.125"
-        app:srcCompat="@drawable/auto" />
 
-    <ImageView
-        android:id="@+id/idSenzorLvl3"
-        android:layout_width="356dp"
-        android:layout_height="210dp"
-        android:layout_marginBottom="104dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
 
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/senzor1lvl3" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/idSenzorLvl2"
-        android:layout_width="356dp"
-        android:layout_height="210dp"
-        android:layout_marginBottom="104dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent"
+        <ImageView
+            android:id="@+id/mainCar"
+            android:layout_width="213dp"
+            android:layout_height="278dp"
+            android:layout_marginStart="75dp"
+            android:layout_marginTop="130dp"
+            android:background="@null"
+            android:contentDescription="@string/mainScreenCar"
 
-        app:srcCompat="@drawable/senzor1lvl2" />
+            app:srcCompat="@drawable/auto" />
 
-    <ImageView
-        android:id="@+id/idSenzorLvl1"
-        android:layout_width="356dp"
-        android:layout_height="210dp"
-        android:layout_marginBottom="104dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.29"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/senzor1lvl1" />
+        <ImageView
+            android:id="@+id/idSenzor1Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="10dp"
+
+            app:srcCompat="@drawable/senzor1lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor1Lvl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="-80dp"
+
+
+            app:srcCompat="@drawable/senzor1lvl2" />
+
+        <ImageView
+            android:id="@+id/idSenzor1Lvl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="110dp"
+            android:layout_marginTop="-80dp"
+            app:srcCompat="@drawable/senzor1lvl1" />
+
+
+
+
+        <ImageView
+            android:id="@+id/idSenzor2Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="-80dp"
+
+            app:srcCompat="@drawable/senzor2lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor2Lvl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="-80dp"
+
+
+            app:srcCompat="@drawable/senzor2lvl2" />
+
+        <ImageView
+            android:id="@+id/idSenzor2Lvl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="-80dp"
+            app:srcCompat="@drawable/senzor2lvl1" />
+
+
+
+        <ImageView
+            android:id="@+id/idSenzor3Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="-80dp"
+
+            app:srcCompat="@drawable/senzor3lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor3Lvl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="-80dp"
+
+
+            app:srcCompat="@drawable/senzor3lvl2" />
+        <ImageView
+            android:id="@+id/idSenzor3Lvl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="150dp"
+            android:layout_marginTop="-80dp"
+            app:srcCompat="@drawable/senzor3lvl1" />
+
+
+
+        <ImageView
+            android:id="@+id/idSenzor4Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="-80dp"
+
+            app:srcCompat="@drawable/senzor4lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor4Lvl2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="-80dp"
+
+
+            app:srcCompat="@drawable/senzor4lvl2" />
+        <ImageView
+            android:id="@+id/idSenzor4Lvl1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="170dp"
+            android:layout_marginTop="-80dp"
+            app:srcCompat="@drawable/senzor4lvl1" />
+
+
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

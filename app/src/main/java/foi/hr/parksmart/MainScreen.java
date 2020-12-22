@@ -19,14 +19,17 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class MainScreen extends AppCompatActivity  {
@@ -45,7 +48,7 @@ public class MainScreen extends AppCompatActivity  {
     private static String sosNumber;
     private BluetoothDevice bleDevice;
     List<Integer> boje = new ArrayList<Integer>();
-    ImageView senzor1;
+    ImageView senzor1,senzor2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,18 +57,55 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
-        boje.add(1);
-        boje.add(2);
-        boje.add(3);
 
-        senzor1 = (ImageView) findViewById(R.id.idSenzorLvl2);
-        for (Integer b : boje ){
-            if( b == 1){
-                int color = Color.parseColor("#AE6118");
-                senzor1.setColorFilter(color);
+        senzor1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
+        senzor2 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
 
+        Thread thread = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(100);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int min = 1;
+                                int max = 5;
+
+                                Random r = new Random();
+                                int random = r.nextInt(max - min + 1) + min;
+                                Log.d("random", String.valueOf(random));
+                                if(random==1) {
+                                    int color = Color.parseColor("#AE6118");
+                                    senzor1.setColorFilter(color);
+                                    senzor2.setColorFilter(color);
+                                }
+                                if(random==2){
+                                    int color = Color.parseColor("#660066");
+                                    senzor1.setColorFilter(color);
+                                    senzor2.setColorFilter(color);
+                                }
+                                if(random==3){
+                                    int color = Color.parseColor("#ff99cc");
+                                    senzor1.setColorFilter(color);
+                                    senzor2.setColorFilter(color);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
             }
-        }
+        };
+
+        thread.start();
+
+
+
+
+
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
@@ -229,6 +269,9 @@ public class MainScreen extends AppCompatActivity  {
     private boolean isNotifiable(BluetoothGattCharacteristic characteristic) {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
+
+    private 
+
 
 
 }
