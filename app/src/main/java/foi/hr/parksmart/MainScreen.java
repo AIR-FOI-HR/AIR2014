@@ -3,7 +3,6 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
@@ -14,22 +13,23 @@ import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattDescriptor;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 public class MainScreen extends AppCompatActivity  {
@@ -51,6 +51,8 @@ public class MainScreen extends AppCompatActivity  {
     String[] arrayOfDataFromMcu={"0.00","0.00","0.00","0.00"};
 
 
+    private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
+            ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -60,6 +62,75 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
+
+        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
+        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
+        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
+        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
+        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
+        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
+        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
+        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
+        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
+        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
+        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
+        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
+
+
+
+        Thread thread = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                int orange = Color.parseColor("#f59942");
+                                int yellow = Color.parseColor("#f5f242");
+                                int red = Color.parseColor("#f70000");
+                                int min = 1;
+                                int max = 15;
+                                Random r = new Random();
+                                int random = r.nextInt(max - min + 1) + min;
+                                Log.d("random", String.valueOf(random));
+                                if(random>=1 && random <=5 ) {
+
+                                    senzor1lvl1.setColorFilter(yellow);
+                                    senzor2lvl1.setColorFilter(yellow);
+                                    senzor3lvl1.setColorFilter(yellow);
+                                    senzor4lvl1.setColorFilter(yellow);
+
+                                }
+                                if(random>=6 && random <=10){
+
+                                    senzor1lvl2.setColorFilter(orange);
+                                    senzor2lvl2.setColorFilter(orange);
+                                    senzor3lvl2.setColorFilter(orange);
+                                    senzor4lvl2.setColorFilter(orange);
+                                }
+                                if(random>10){
+
+                                    senzor1lvl3.setColorFilter(red);
+                                    senzor2lvl3.setColorFilter(red);
+                                    senzor3lvl3.setColorFilter(red);
+                                    senzor4lvl3.setColorFilter(red);
+                                }
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        thread.start();
+
+
+
+
 
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
@@ -267,6 +338,9 @@ public class MainScreen extends AppCompatActivity  {
     {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
+
+
+
 
 
 }
