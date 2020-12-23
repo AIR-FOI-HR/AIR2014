@@ -119,5 +119,12 @@
         app:layout_constraintVertical_bias="0.404"
         app:srcCompat="@drawable/auto" />
 
+    <TextView
+        android:id="@+id/sensor_L"
+        android:layout_width="215dp"
+        android:layout_height="34dp"
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="114dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

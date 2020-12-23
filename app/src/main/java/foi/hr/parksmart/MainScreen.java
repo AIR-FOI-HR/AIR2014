@@ -47,9 +47,13 @@ public class MainScreen extends AppCompatActivity  {
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
+    String dataFromMcu;
+    String[] arrayOfDataFromMcu={"0.00","0.00","0.00","0.00"};
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
@@ -74,11 +78,40 @@ public class MainScreen extends AppCompatActivity  {
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
         EstablishConnection();
+
+        Thread thread = new Thread() {
+
+            @Override
+            public void run()
+            {
+                try {
+                    while (!isInterrupted())
+                    {
+                        Thread.sleep(100);
+                        runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                TextView sensor_R = (TextView) findViewById(R.id.sensor_L);
+                                sensor_R.setText(arrayOfDataFromMcu[0]);
+                                //Log.d("data 0:",arrayOfDataFromMcu[1]);
+                            }
+                        });
+                    }
+                } catch (InterruptedException e)
+                {
+                }
+            }
+        };
+
+        thread.start();
     }
     //Preference.OnPreferenceChangeListener()
 
     @Override
-    protected void onResume() {
+    protected void onResume()
+    {
         super.onResume();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
         FloatingActionButton sosButton=findViewById(R.id.btnSos);
@@ -89,21 +122,24 @@ public class MainScreen extends AppCompatActivity  {
     }
 
 
-    public void hideButton(View view) {
+    public void hideButton(View view)
+    {
         FloatingActionButton BtnZvuk = findViewById(R.id.btnZvuk);
         FloatingActionButton BtnZvukOff = findViewById(R.id.btnZvukOff);
         BtnZvuk.setVisibility(View.GONE);
         BtnZvukOff.setVisibility(View.VISIBLE);
     }
 
-    public void showButton(View view) {
+    public void showButton(View view)
+    {
         FloatingActionButton BtnZvuk = findViewById(R.id.btnZvuk);
         FloatingActionButton BtnZvukOff = findViewById(R.id.btnZvukOff);
         BtnZvukOff.setVisibility(View.GONE);
         BtnZvuk.setVisibility(View.VISIBLE);
     }
 
-    private void callSos(View view) {
+    private void callSos(View view)
+    {
         //if(sosNumber=="")sosNumber="385112";
         String sosPhoneNumber = "tel:" + sosNumber;
         Intent callIntent = new Intent(Intent.ACTION_CALL);
@@ -116,14 +152,16 @@ public class MainScreen extends AppCompatActivity  {
         startActivity(intentSettings);
     }
 
-    public UUID convertFromInteger(int i) {
+    public UUID convertFromInteger(int i)
+    {
         final long MSB = 0x0000000000001000L;
         final long LSB = 0x800000805f9b34fbL;
         long value = i & 0xFFFFFFFF;
         return new UUID(MSB | (value << 32), LSB);
     }
 
-    String byteArrayToString(byte[] in) {
+    String byteArrayToString(byte[] in)
+    {
         char out[] = new char[in.length * 2];
         for (int i = 0; i < in.length; i++) {
             out[i * 2] = "0123456789ABCDEF".charAt((in[i] >> 4) & 15);
@@ -132,7 +170,8 @@ public class MainScreen extends AppCompatActivity  {
         return new String(out);
     }
 
-    String hexToString(String hex){
+    String hexToString(String hex)
+    {
         StringBuilder output = new StringBuilder();
         for (int i = 0; i < hex.length(); i+=2) {
             String str = hex.substring(i, i+2);
@@ -144,7 +183,8 @@ public class MainScreen extends AppCompatActivity  {
     //Bluetooth connection
     private void EstablishConnection() {
         if(bleDevice != null){
-            BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
+            BluetoothGattCallback gattCallback = new BluetoothGattCallback()
+            {
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
                     super.onConnectionStateChange(gatt, status, newState);
@@ -172,7 +212,8 @@ public class MainScreen extends AppCompatActivity  {
                 }
 
                 @Override
-                public void onServicesDiscovered(BluetoothGatt gatt, int status) {
+                public void onServicesDiscovered(BluetoothGatt gatt, int status)
+                {
                     super.onServicesDiscovered(gatt, status);
                     if(gatt != null){
                         Log.w("BluetoothGattCallback", "Discovered ${services.size} services for ${device.address}");
@@ -181,13 +222,17 @@ public class MainScreen extends AppCompatActivity  {
                     }
                 }
                 @Override
-                public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
+                public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic)
+                {
                     super.onCharacteristicChanged(gatt, characteristic);
                     //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
-                    Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));
+                    dataFromMcu=hexToString(byteArrayToString(characteristic.getValue()));
+                    arrayOfDataFromMcu = dataFromMcu.split(",");
+                    Log.i("CharValue", dataFromMcu);
                 }
                 @Override
-                public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
+                public void onMtuChanged(BluetoothGatt gatt, int mtu, int status)
+                {
                     super.onMtuChanged(gatt, mtu, status);
                     String logStatus = mtu + " status = ";
                     if(status == BluetoothGatt.GATT_SUCCESS){
@@ -203,7 +248,8 @@ public class MainScreen extends AppCompatActivity  {
         }
     }
 
-    private void setNotifications(BluetoothGatt gatt) {
+    private void setNotifications(BluetoothGatt gatt)
+    {
         BluetoothGattService distanceService = gatt.getService(ESP32_SERVICE_UUID);
         if (distanceService != null) {
             BluetoothGattCharacteristic distanceCharacteristic = distanceService.getCharacteristic(ESP32_CHARACTERISTIC_UUID);
@@ -217,7 +263,8 @@ public class MainScreen extends AppCompatActivity  {
         }
     }
 
-    private boolean isNotifiable(BluetoothGattCharacteristic characteristic) {
+    private boolean isNotifiable(BluetoothGattCharacteristic characteristic)
+    {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
 
