@@ -6,6 +6,8 @@ import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -22,6 +24,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -50,6 +53,7 @@ public class MainScreen extends AppCompatActivity  {
     String dataFromMcu;
     String[] arrayOfDataFromMcu={"0.00","0.00","0.00","0.00"};
 
+    private Dialog dialogTurnedOFF, missingDevice;
 
     private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
             ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3;
@@ -239,7 +243,24 @@ public class MainScreen extends AppCompatActivity  {
                             Boolean stat = gatt.requestMtu(GATT_MAX_MTU_SIZE);
                             Log.i("MTUstat", stat.toString());
                         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+                            dialogTurnedOFF = new Dialog(MainScreen.this);
+                            dialogTurnedOFF.setContentView(R.layout.bluetooth_message_turned_off);
+                            dialogTurnedOFF.setCanceledOnTouchOutside(false);
+
+                            Button btnOn = (Button) dialogTurnedOFF.findViewById(R.id.btnTurnOn);
+                            btnOn.setOnClickListener(new View.OnClickListener() {
+
+                                public void onClick(View v) {
+                                    final int REQUEST_ENABLE_BT = 1;
+                                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                                    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+                                    EstablishConnection();
+                                }
+                            });
                             Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
+                            missingDevice = new Dialog(MainScreen.this);
+                            missingDevice.setContentView(R.layout.bluetooth_message_missing_device);
+                            missingDevice.setCanceledOnTouchOutside(false);
                             /*TODO treba prikazati poruku na zaslonu da je uređaj disconnectan (razlog je isključivanje Bluetootha
                                na mobitelu) i tražiti od korisnika da upali Bluetooth i
                                pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
