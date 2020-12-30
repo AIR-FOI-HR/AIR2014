@@ -76,6 +76,7 @@ public class MainScreen extends AppCompatActivity  {
         senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
         senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
 
+        // tu trebamo napraviti da se provjera koji je MOD uključen
 
 
         Thread thread = new Thread() {
@@ -84,40 +85,13 @@ public class MainScreen extends AppCompatActivity  {
             public void run() {
                 try {
                     while (!isInterrupted()) {
-                        Thread.sleep(1000);
+                        Thread.sleep(100);
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                int orange = Color.parseColor("#f59942");
-                                int yellow = Color.parseColor("#f5f242");
-                                int red = Color.parseColor("#f70000");
-                                int min = 1;
-                                int max = 15;
-                                Random r = new Random();
-                                int random = r.nextInt(max - min + 1) + min;
-                                Log.d("random", String.valueOf(random));
-                                if(random>=1 && random <=5 ) {
+                                showColorDistance(arrayOfDataFromMcu);
 
-                                    senzor1lvl1.setColorFilter(yellow);
-                                    senzor2lvl1.setColorFilter(yellow);
-                                    senzor3lvl1.setColorFilter(yellow);
-                                    senzor4lvl1.setColorFilter(yellow);
 
-                                }
-                                if(random>=6 && random <=10){
-
-                                    senzor1lvl2.setColorFilter(orange);
-                                    senzor2lvl2.setColorFilter(orange);
-                                    senzor3lvl2.setColorFilter(orange);
-                                    senzor4lvl2.setColorFilter(orange);
-                                }
-                                if(random>10){
-
-                                    senzor1lvl3.setColorFilter(red);
-                                    senzor2lvl3.setColorFilter(red);
-                                    senzor3lvl3.setColorFilter(red);
-                                    senzor4lvl3.setColorFilter(red);
-                                }
                             }
                         });
                     }
@@ -150,7 +124,7 @@ public class MainScreen extends AppCompatActivity  {
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
         EstablishConnection();
 
-        Thread thread = new Thread() {
+        Thread thread1 = new Thread() {
 
             @Override
             public void run()
@@ -164,9 +138,9 @@ public class MainScreen extends AppCompatActivity  {
                             @Override
                             public void run()
                             {
-                                TextView sensor_R = (TextView) findViewById(R.id.sensor_L);
+                             /* TextView sensor_R = (TextView) findViewById(R.id.sensor_L);
                                 sensor_R.setText(arrayOfDataFromMcu[0]);
-                                //Log.d("data 0:",arrayOfDataFromMcu[1]);
+                                Log.d("data 0:",arrayOfDataFromMcu[1]);*/
                             }
                         });
                     }
@@ -176,7 +150,7 @@ public class MainScreen extends AppCompatActivity  {
             }
         };
 
-        thread.start();
+        thread1.start();
     }
     //Preference.OnPreferenceChangeListener()
 
@@ -339,7 +313,117 @@ public class MainScreen extends AppCompatActivity  {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
 
+    private void showColorDistance(String[] data){
+        float senzor1 = Float.parseFloat("data[0]");
+        float senzor2 = Float.parseFloat("data[1]");
+        float senzor3 = Float.parseFloat("data[2]");
+        float senzor4 = Float.parseFloat("data[3]");
 
+
+        int orange = Color.parseColor("#f59942");
+        int yellow = Color.parseColor("#f5f242");
+        int red = Color.parseColor("#f70000");
+        int transparent= Color.parseColor("#00000000");
+
+        //senzor1
+
+        if(senzor1 > 50){
+            senzor1lvl1.setColorFilter(yellow);
+        }else {
+            senzor1lvl1.setColorFilter(transparent);
+        }
+        if(senzor1 <=50 && senzor1>=15){
+            senzor1lvl1.setColorFilter(yellow);
+            senzor1lvl2.setColorFilter(orange);
+        }else{
+            senzor1lvl1.setColorFilter(transparent);
+            senzor1lvl2.setColorFilter(transparent);
+        }
+        if(senzor1 < 15){
+            senzor1lvl1.setColorFilter(yellow);
+            senzor1lvl2.setColorFilter(orange);
+            senzor1lvl3.setColorFilter(red);
+        }
+        else{
+            senzor1lvl1.setColorFilter(transparent);
+            senzor1lvl2.setColorFilter(transparent);
+            senzor1lvl3.setColorFilter(transparent);
+        }
+
+        //senzor2
+        if(senzor2 > 50){
+            senzor2lvl1.setColorFilter(yellow);
+        }else {
+            senzor2lvl1.setColorFilter(transparent);
+        }
+        if(senzor2 <=50 && senzor2>=15){
+            senzor2lvl1.setColorFilter(yellow);
+            senzor2lvl2.setColorFilter(orange);
+        }else{
+            senzor2lvl1.setColorFilter(transparent);
+            senzor2lvl2.setColorFilter(transparent);
+        }
+        if(senzor2 < 15){
+            senzor2lvl1.setColorFilter(yellow);
+            senzor2lvl2.setColorFilter(orange);
+            senzor2lvl3.setColorFilter(red);
+        }
+        else{
+            senzor2lvl1.setColorFilter(transparent);
+            senzor2lvl2.setColorFilter(transparent);
+            senzor2lvl3.setColorFilter(transparent);
+        }
+
+        //senzor3
+        if(senzor3 > 50){
+            senzor3lvl1.setColorFilter(yellow);
+        }else {
+            senzor3lvl1.setColorFilter(transparent);
+        }
+        if(senzor3 <=50 && senzor3>=15){
+            senzor3lvl1.setColorFilter(yellow);
+            senzor3lvl2.setColorFilter(orange);
+        }else{
+            senzor3lvl1.setColorFilter(transparent);
+            senzor3lvl2.setColorFilter(transparent);
+        }
+        if(senzor3 < 15){
+            senzor3lvl1.setColorFilter(yellow);
+            senzor3lvl2.setColorFilter(orange);
+            senzor3lvl3.setColorFilter(red);
+        }
+        else{
+            senzor3lvl1.setColorFilter(transparent);
+            senzor3lvl2.setColorFilter(transparent);
+            senzor3lvl3.setColorFilter(transparent);
+        }
+
+        //senzor4
+        if(senzor4 > 50){
+            senzor4lvl1.setColorFilter(yellow);
+        }else {
+            senzor4lvl1.setColorFilter(transparent);
+        }
+        if(senzor4 <=50 && senzor4>=15){
+            senzor4lvl1.setColorFilter(yellow);
+            senzor4lvl2.setColorFilter(orange);
+        }else{
+            senzor4lvl1.setColorFilter(transparent);
+            senzor4lvl2.setColorFilter(transparent);
+        }
+        if(senzor4 < 15){
+            senzor4lvl1.setColorFilter(yellow);
+            senzor4lvl2.setColorFilter(orange);
+            senzor4lvl3.setColorFilter(red);
+        }
+        else{
+            senzor4lvl1.setColorFilter(transparent);
+            senzor4lvl2.setColorFilter(transparent);
+            senzor4lvl3.setColorFilter(transparent);
+        }
+
+
+    }
 
 
 

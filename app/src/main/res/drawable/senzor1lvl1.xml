@@ -6,5 +6,5 @@
 
 <path
         android:pathData="M80 100L80 190L0 190L38 100 z"
-        android:fillColor="@color/red" />
+        android:fillColor="@color/transparent" />
 </vector>

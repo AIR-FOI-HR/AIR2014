@@ -5,6 +5,6 @@
     android:width="80dp" xmlns:android="http://schemas.android.com/apk/res/android">
 
 <path
-        android:pathData="M100 50L100 100L80 100L80 50 z"
-        android:fillColor="@color/red" />
+    android:pathData="M95 50L95 100L13 100L13 50 z"
+    android:fillColor="@color/transparent" />
 </vector>
