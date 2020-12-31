@@ -36,8 +36,7 @@ public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
-    //BLE MTU size
-    //payload size = MTU - 3
+    //BLE MTU size, payload size = MTU - 3
     private static final int GATT_MAX_MTU_SIZE = 46;
 
     // UUIDs for the Distance service
@@ -47,6 +46,7 @@ public class MainScreen extends AppCompatActivity  {
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
+    private Boolean parkingSensitivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +86,8 @@ public class MainScreen extends AppCompatActivity  {
         if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
+        parkingSensitivity = sharedPreferences.getBoolean("keyParkSensOnOff", false);
+        Log.i("ParkSensButton", parkingSensitivity.toString());
     }
 
 

@@ -17,11 +17,9 @@
         android:title="SOS broj" />
 
     <SwitchPreference
-        android:id="@+id/idSensorSensitivity"
+        android:id="@+id/idParkSens"
         android:defaultValue="false"
-        android:key="keySensOnOff"
+        android:key="keyParkSensOnOff"
         android:title="Parking osjetljivost" />
-
-
 
 </PreferenceScreen>
