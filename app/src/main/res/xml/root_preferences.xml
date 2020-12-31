@@ -9,10 +9,19 @@
         android:defaultValue="true"
         android:key="keySosOnOff"
         android:title="SOS (sakri/prikaži)" />
+
     <EditTextPreference
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"
         android:key="keySosNumbera"
         android:title="SOS broj" />
+
+    <SwitchPreference
+        android:id="@+id/idSensorSensitivity"
+        android:defaultValue="false"
+        android:key="keySensOnOff"
+        android:title="Parking osjetljivost" />
+
+
 
 </PreferenceScreen>

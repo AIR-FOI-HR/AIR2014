@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
-
-
+    
     public Dialog dialog;
     TextView printWarning;
     private BluetoothAdapter mBluetoothAdapter;

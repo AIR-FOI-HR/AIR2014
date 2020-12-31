@@ -220,8 +220,6 @@ public class MainScreen extends AppCompatActivity  {
     private boolean isNotifiable(BluetoothGattCharacteristic characteristic) {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
-
-
 }
 
 
