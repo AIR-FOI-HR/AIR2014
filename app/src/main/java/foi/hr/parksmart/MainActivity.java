@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
-        GoToMainScreen();
     }
 
 
@@ -226,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     @Override
     public void onBluetoothDeviceClick(int position) {
         //Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
-        GoToMainScreen();
+        GoToMainScreen(bleDevices.get(position));
 
         // stavi povezivanje s uređajem
 
@@ -234,9 +233,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 
-    protected void GoToMainScreen(){
+    protected void GoToMainScreen(BluetoothDevice bleDevice){
         Intent intent = new Intent(MainActivity.this, MainScreen.class);
-        //intent.putExtra("BLE_DEVICE", bleDevice);
+        intent.putExtra("BLE_DEVICE", bleDevice);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
