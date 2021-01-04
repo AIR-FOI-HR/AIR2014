@@ -95,7 +95,6 @@ public class MainScreen extends AppCompatActivity  {
                             public void run() {
                                 showColorDistance(arrayOfDataFromMcu);
 
-
                             }
                         });
                     }
@@ -258,9 +257,7 @@ public class MainScreen extends AppCompatActivity  {
                                 }
                             });
                             Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
-                            missingDevice = new Dialog(MainScreen.this);
-                            missingDevice.setContentView(R.layout.bluetooth_message_missing_device);
-                            missingDevice.setCanceledOnTouchOutside(false);
+
                             /*TODO treba prikazati poruku na zaslonu da je uređaj disconnectan (razlog je isključivanje Bluetootha
                                na mobitelu) i tražiti od korisnika da upali Bluetooth i
                                pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
@@ -273,6 +270,10 @@ public class MainScreen extends AppCompatActivity  {
                         /* TODO ista stvar kao i prethodni TODO samo što razlog nije isključivanje Bluetootha nego
                             isključivanje BLE servera (ESP32 mikrokontrolera) ili neka druga greška
                          */
+                        missingDevice = new Dialog(MainScreen.this);
+                        missingDevice.setContentView(R.layout.bluetooth_message_missing_device);
+                        missingDevice.setCanceledOnTouchOutside(false);
+
                         gatt.close();
                     }
                 }
@@ -335,13 +336,14 @@ public class MainScreen extends AppCompatActivity  {
     }
 
     private void showColorDistance(String[] data){
-        float senzor1 = Float.parseFloat("data[0]");
-        float senzor2 = Float.parseFloat("data[1]");
-        float senzor3 = Float.parseFloat("data[2]");
-        float senzor4 = Float.parseFloat("data[3]");
+        float senzor1 = Float.parseFloat(data[0]);
+        float senzor2 = Float.parseFloat(data[1]);
+        float senzor3 = Float.parseFloat(data[2]);
+        float senzor4 = Float.parseFloat(data[3]);
 
 
-        int orange = Color.parseColor("#f59942");
+
+        int orange = Color.parseColor("#ff6600");
         int yellow = Color.parseColor("#f5f242");
         int red = Color.parseColor("#f70000");
         int transparent= Color.parseColor("#00000000");
@@ -360,7 +362,7 @@ public class MainScreen extends AppCompatActivity  {
             senzor1lvl1.setColorFilter(transparent);
             senzor1lvl2.setColorFilter(transparent);
         }
-        if(senzor1 < 15){
+        if(senzor1 < 15 && senzor1 >0.1 ){
             senzor1lvl1.setColorFilter(yellow);
             senzor1lvl2.setColorFilter(orange);
             senzor1lvl3.setColorFilter(red);
@@ -384,7 +386,7 @@ public class MainScreen extends AppCompatActivity  {
             senzor2lvl1.setColorFilter(transparent);
             senzor2lvl2.setColorFilter(transparent);
         }
-        if(senzor2 < 15){
+        if(senzor2 < 15 && senzor2 >0.1){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
             senzor2lvl3.setColorFilter(red);
@@ -408,7 +410,7 @@ public class MainScreen extends AppCompatActivity  {
             senzor3lvl1.setColorFilter(transparent);
             senzor3lvl2.setColorFilter(transparent);
         }
-        if(senzor3 < 15){
+        if(senzor3 < 15 && senzor3 >0.1){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
             senzor3lvl3.setColorFilter(red);
@@ -432,7 +434,7 @@ public class MainScreen extends AppCompatActivity  {
             senzor4lvl1.setColorFilter(transparent);
             senzor4lvl2.setColorFilter(transparent);
         }
-        if(senzor4 < 15){
+        if(senzor4 < 15 && senzor4 >0.1){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
             senzor4lvl3.setColorFilter(red);
