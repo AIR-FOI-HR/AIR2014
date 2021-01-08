@@ -103,23 +103,23 @@
         app:layout_constraintVertical_bias="0.928" />
 
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="143dp"
-        tools:layout_editor_absoluteY="102dp">
+        tools:layout_editor_absoluteX="-47dp"
+        tools:layout_editor_absoluteY="-153dp">
 
         <ImageView
             android:id="@+id/mainCar"
             android:layout_width="213dp"
             android:layout_height="278dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="82dp"
             android:layout_marginRight="116dp"
-            android:layout_marginBottom="283dp"
+            android:layout_marginBottom="233dp"
             android:background="@null"
             android:contentDescription="@string/mainScreenCar"
             app:srcCompat="@drawable/auto" />
@@ -129,32 +129,38 @@
             android:id="@+id/idSenzor1Lvl3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="122dp"
             android:layout_marginRight="210dp"
-            android:layout_marginBottom="191dp"
+            android:layout_marginBottom="141dp"
             app:srcCompat="@drawable/senzor1lvl3" />
 
         <ImageView
             android:id="@+id/idSenzor1Lvl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
+
+
             android:layout_alignParentBottom="true"
-
-
+            android:layout_marginStart="122dp"
             android:layout_marginRight="210dp"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="140dp"
             app:srcCompat="@drawable/senzor1lvl2" />
 
         <ImageView
             android:id="@+id/idSenzor1Lvl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="122dp"
             android:layout_marginRight="210dp"
-            android:layout_marginBottom="189dp"
+            android:layout_marginBottom="139dp"
             app:srcCompat="@drawable/senzor1lvl1" />
 
         android:layout_alignParentBottom="true"
@@ -164,144 +170,173 @@
             android:id="@+id/idSenzor2Lvl3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
             android:layout_marginRight="182dp"
-            android:layout_marginBottom="191dp"
+            android:layout_marginBottom="141dp"
             app:srcCompat="@drawable/senzor2lvl3" />
 
         <ImageView
             android:id="@+id/idSenzor2Lvl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
 
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
             android:layout_marginRight="182dp"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="140dp"
             app:srcCompat="@drawable/senzor2lvl2" />
 
         <ImageView
             android:id="@+id/idSenzor2Lvl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
             android:layout_marginRight="182dp"
-            android:layout_marginBottom="189dp"
+            android:layout_marginBottom="139dp"
             app:srcCompat="@drawable/senzor2lvl1" />
 
         <ImageView
             android:id="@+id/idSenzor3Lvl3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="148dp"
             android:layout_marginRight="183dp"
-            android:layout_marginBottom="191dp"
+            android:layout_marginBottom="141dp"
             app:srcCompat="@drawable/senzor3lvl3" />
 
         <ImageView
             android:id="@+id/idSenzor3Lvl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
             android:layout_marginRight="182dp"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="140dp"
             app:srcCompat="@drawable/senzor3lvl2" />
 
         <ImageView
             android:id="@+id/idSenzor3Lvl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
             android:layout_marginRight="182dp"
-            android:layout_marginBottom="189dp"
+            android:layout_marginBottom="139dp"
             app:srcCompat="@drawable/senzor3lvl1" />
 
         <ImageView
             android:id="@+id/idSenzor4Lvl3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="178dp"
             android:layout_marginRight="153dp"
-            android:layout_marginBottom="191dp"
+            android:layout_marginBottom="141dp"
             app:srcCompat="@drawable/senzor4lvl3" />
 
         <ImageView
             android:id="@+id/idSenzor4Lvl2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="178dp"
             android:layout_marginRight="153dp"
-            android:layout_marginBottom="190dp"
+            android:layout_marginBottom="140dp"
             app:srcCompat="@drawable/senzor4lvl2" />
 
         <ImageView
             android:id="@+id/idSenzor4Lvl1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="178dp"
             android:layout_marginRight="153dp"
-            android:layout_marginBottom="189dp"
+            android:layout_marginBottom="139dp"
             app:srcCompat="@drawable/senzor4lvl1" />
 
         <ImageView
             android:id="@+id/idLevel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="75dp"
             android:layout_marginRight="166dp"
-            android:layout_marginBottom="170dp"
+            android:layout_marginBottom="120dp"
             app:srcCompat="@drawable/levels" />
 
         <ImageView
             android:id="@+id/idLevel2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_marginStart="75dp"
             android:layout_marginRight="166dp"
-            android:layout_marginBottom="148dp"
+            android:layout_marginBottom="98dp"
             app:srcCompat="@drawable/levels" />
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="291dp"
-            android:layout_marginBottom="251dp"
-            android:text="@string/da" />
+            android:layout_marginStart="76dp"
+            android:layout_marginRight="263dp"
+            android:layout_marginBottom="202dp"
+            android:text="@string/distance1"
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="274dp"
-            android:layout_marginBottom="230dp"
-
-            android:text="@string/xsad" />
+            android:layout_marginStart="76dp"
+            android:layout_marginRight="278dp"
+            android:layout_marginBottom="181dp"
+            android:text="@string/distance2"
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="282dp"
-            android:layout_marginBottom="203dp"
-
-            android:text="@string/sad" />
+            android:layout_marginStart="76dp"
+            android:layout_marginRight="284dp"
+            android:layout_marginBottom="159dp"
+            android:text="@string/distance3"
+            android:textSize="10dp" />
 
 
     </RelativeLayout>

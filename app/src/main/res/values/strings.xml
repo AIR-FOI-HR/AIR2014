@@ -25,7 +25,20 @@
     <string name="txt_device_name">Device name</string>
     <string name="lbl_mac_address">MAC address:</string>
     <string name="txt_mac_address">MAC address</string>
-    <string name="da"><![CDATA[<15]]></string>
-    <string name="xsad"><![CDATA[15> i <50]]></string>
-    <string name="sad"><![CDATA[100> i <50]]></string>
+    <string name="distance1"><![CDATA[Prikaz u cm <50]]></string>
+    <string name="distance2"><![CDATA[50>= i =<100]]></string>
+    <string name="distance3"><![CDATA[100> i <160]]></string>
+
+
+    <!-- Fragmet elements-->
+    <string name="default_value">txtMod</string>
+    <string-array name="frag_elem">
+        <item>Tekstualni prikaz</item>
+        <item>Grafički prikaz</item>
+    </string-array>
+
+    <string-array name="frag_elem_values">
+        <item>txtMod</item>
+        <item>graphMod</item>
+    </string-array>
 </resources>

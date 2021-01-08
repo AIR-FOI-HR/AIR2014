@@ -4,6 +4,6 @@
     android:viewportWidth="200"
     android:width="80dp" xmlns:android="http://schemas.android.com/apk/res/android">
     <path
-        android:pathData="M120 50L141 50L161 100L120 100"
+        android:pathData="M118 50L141 50L161 100L118 100"
         android:fillColor="@color/transparent" />
 </vector>

@@ -8,11 +8,24 @@
         android:id="@+id/idSosOnOff"
         android:defaultValue="true"
         android:key="keySosOnOff"
-        android:title="SOS (sakri/prikaži)" />
+        android:summary="Uključi ili isključi prikaz gumba"
+        android:switchTextOff="ukl"
+        android:title="SOS prikaz gumba" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"
         android:key="keySosNumbera"
+        android:summary="Mogućnost promijene broja"
         android:title="SOS broj" />
+
+    <ListPreference
+        android:key="mod_elements"
+        android:title="Prikaz udaljenosti na zaslonu"
+        android:entries="@array/frag_elem"
+        android:entryValues="@array/frag_elem_values"
+        android:defaultValue="@string/default_value"
+        android:summary="Odabir izgleda prikaza podataka"
+        />
+
 
 </PreferenceScreen>

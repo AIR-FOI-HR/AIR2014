@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
+
 public class MainScreen extends AppCompatActivity  {
 
     private static final int REQUEST_PHONE_CALL = 1;
@@ -350,19 +351,19 @@ public class MainScreen extends AppCompatActivity  {
 
         //senzor1
 
-        if(senzor1 > 50){
+        if(senzor1 > 1){
             senzor1lvl1.setColorFilter(yellow);
         }else {
             senzor1lvl1.setColorFilter(transparent);
         }
-        if(senzor1 <=50 && senzor1>=15){
+        if(senzor1 <=1 && senzor1>=0.5){
             senzor1lvl1.setColorFilter(yellow);
             senzor1lvl2.setColorFilter(orange);
         }else{
             senzor1lvl1.setColorFilter(transparent);
             senzor1lvl2.setColorFilter(transparent);
         }
-        if(senzor1 < 15 && senzor1 >0.1 ){
+        if(senzor1 < 0.5 && senzor1 >0.1 ){
             senzor1lvl1.setColorFilter(yellow);
             senzor1lvl2.setColorFilter(orange);
             senzor1lvl3.setColorFilter(red);
@@ -374,19 +375,19 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor2
-        if(senzor2 > 50){
+        if(senzor2 > 1){
             senzor2lvl1.setColorFilter(yellow);
         }else {
             senzor2lvl1.setColorFilter(transparent);
         }
-        if(senzor2 <=50 && senzor2>=15){
+        if(senzor2 <=1 && senzor2>=0.5){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
         }else{
             senzor2lvl1.setColorFilter(transparent);
             senzor2lvl2.setColorFilter(transparent);
         }
-        if(senzor2 < 15 && senzor2 >0.1){
+        if(senzor2 < 0.5 && senzor2 >0.1){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
             senzor2lvl3.setColorFilter(red);
@@ -398,19 +399,19 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor3
-        if(senzor3 > 50){
+        if(senzor3 > 1){
             senzor3lvl1.setColorFilter(yellow);
         }else {
             senzor3lvl1.setColorFilter(transparent);
         }
-        if(senzor3 <=50 && senzor3>=15){
+        if(senzor3 <=1 && senzor3>=0.5){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
         }else{
             senzor3lvl1.setColorFilter(transparent);
             senzor3lvl2.setColorFilter(transparent);
         }
-        if(senzor3 < 15 && senzor3 >0.1){
+        if(senzor3 < 0.5 && senzor3 >0.1){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
             senzor3lvl3.setColorFilter(red);
@@ -422,19 +423,19 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor4
-        if(senzor4 > 50){
+        if(senzor4 > 1){
             senzor4lvl1.setColorFilter(yellow);
         }else {
             senzor4lvl1.setColorFilter(transparent);
         }
-        if(senzor4 <=50 && senzor4>=15){
+        if(senzor4 <=1 && senzor4>=0.5){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
         }else{
             senzor4lvl1.setColorFilter(transparent);
             senzor4lvl2.setColorFilter(transparent);
         }
-        if(senzor4 < 15 && senzor4 >0.1){
+        if(senzor4 < 0.5 && senzor4 >0.1){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
             senzor4lvl3.setColorFilter(red);
@@ -447,7 +448,6 @@ public class MainScreen extends AppCompatActivity  {
 
 
     }
-
 
 
 }
