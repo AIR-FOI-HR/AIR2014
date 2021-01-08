@@ -5,12 +5,14 @@
 
 BLECharacteristic *pCharacteristic;
 bool deviceConnected = false;
-int txtValue = 0;
 char buff[35];
 
 #define SERVICE_UUID           "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
 #define CHARACTERISTIC_UUID_TX "beb5483e-36e1-4688-b7f5-ea07361b26a8"
-#define irSensorPin 4           // the number of the IR sensor
+#define irSensor1Pin 8          // the number of the IR sensor 1, GPIO 16
+#define irSensor2Pin 9          // the number of the IR sensor 2, GPIO 17
+#define irSensor3Pin 11         // the number of the IR sensor 3, GPIO 18
+#define irSensor4Pin 12         // the number of the IR sensor 4, GPIO 19
 
 /*
  * Nasljeđivanje klase BLEServerCallbacks kako bi se proširile
@@ -58,35 +60,43 @@ void setup() {
  //Pokreni advertising
  pServer->getAdvertising()->start();
  
- pinMode(irSensorPin, INPUT);
+ pinMode(irSensor1Pin, INPUT);
+ pinMode(irSensor2Pin, INPUT);
+ pinMode(irSensor3Pin, INPUT);
+ pinMode(irSensor4Pin, INPUT);
+ 
  Serial.println("Cekam na vezu s klijentom kako bi zapocelo slanje obavijest...");
 }
 
 void loop() {
   if(deviceConnected){
-    txtValue = digitalRead(irSensorPin);
-    /*
-     * ovdje treba dodati jos citanje preostala tri senzora
-     */
     
     //Konverzija txtValue
-    char txtString[8];
-    dtostrf(txtValue, 1, 2, txtString);
-
-    strcpy(buff,txtString);
-    strcat(buff,",");
-    strcat(buff,txtString);
-    strcat(buff,",");
-    strcat(buff,txtString);
-    strcat(buff,",");
-    strcat(buff,txtString);
+    char txtStringA[8];
+    char txtStringB[8];
+    char txtStringC[8];
+    char txtStringD[8];
     
+    dtostrf(digitalRead(irSensor1Pin), 1, 2, txtStringA);
+    dtostrf(digitalRead(irSensor2Pin), 1, 2, txtStringB);
+    dtostrf(digitalRead(irSensor3Pin), 1, 2, txtStringC);
+    dtostrf(digitalRead(irSensor4Pin), 1, 2, txtStringD);
+    
+    strcpy(buff, txtStringA);
+    strcat(buff, ",");
+    strcat(buff, txtStringB);
+    strcat(buff, ",");
+    strcat(buff, txtStringC);
+    strcat(buff, ",");
+    strcat(buff, txtStringD);
+
     //Prenosenje txtString vrijednosti u characteristic
     pCharacteristic->setValue(buff);
-
+    
     //Slanje notifikacije klijentu
-    pCharacteristic->notify(); 
+    pCharacteristic->notify();
     Serial.println("Trenutna vrijednost: " + String(buff));
+
     delay(500);
   }
 }
