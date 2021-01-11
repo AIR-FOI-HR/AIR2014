@@ -57,7 +57,8 @@ public class MainScreen extends AppCompatActivity  {
     private Dialog dialogTurnedOFF, missingDevice;
 
     private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
-            ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3;
+            ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3,level1,level2;
+    TextView firstDistance , secondDistance, thirdDistance, txtSenzor1,txtSenzor2,txtSenzor3,txtSenzor4;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -67,12 +68,32 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
+
+        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
+        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
+        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
+        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
+        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
+        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
+        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
+        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
+        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
+        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
+        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
+        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
+        level1 = (ImageView) findViewById(R.id.idLevel);
+        level2 = (ImageView) findViewById(R.id.idLevel2);
+        firstDistance = (TextView) findViewById(R.id.textView2);
+        secondDistance = (TextView) findViewById(R.id.textView3);
+        thirdDistance = (TextView) findViewById(R.id.textView4);
+        txtSenzor1 = (TextView) findViewById(R.id.txtSenzor1);
+        txtSenzor2 = (TextView) findViewById(R.id.txtSenzor2);
+        txtSenzor3 = (TextView) findViewById(R.id.txtSenzor3);
+        txtSenzor4 = (TextView) findViewById(R.id.txtSenzor4);
+
+
+
         mod= sharedPreferences.getString("mod_elements","txtMod");
-        Log.d("modovi", mod);
-
-
-        // tu trebamo napraviti da se provjera koji je MOD uključen
-
 
         Thread thread = new Thread() {
 
@@ -84,8 +105,16 @@ public class MainScreen extends AppCompatActivity  {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showColorDistance(arrayOfDataFromMcu);
+                                if(mod.equals("graphMod")){
 
+                                    showGraphDistance(arrayOfDataFromMcu);
+                                    hideTxtDisance();
+                                }else{
+
+                                    showTxtDistance(arrayOfDataFromMcu);
+                                    hideColorDistance();
+
+                                }
                             }
                         });
                     }
@@ -95,9 +124,6 @@ public class MainScreen extends AppCompatActivity  {
         };
 
         thread.start();
-
-
-
 
 
         sosGumb.setOnClickListener((View v) -> {
@@ -117,34 +143,6 @@ public class MainScreen extends AppCompatActivity  {
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
         EstablishConnection();
-
-        Thread thread1 = new Thread() {
-
-            @Override
-            public void run()
-            {
-                try {
-                    while (!isInterrupted())
-                    {
-                        Thread.sleep(100);
-                        runOnUiThread(new Runnable()
-                        {
-                            @Override
-                            public void run()
-                            {
-                             /* TextView sensor_R = (TextView) findViewById(R.id.sensor_L);
-                                sensor_R.setText(arrayOfDataFromMcu[0]);
-                                Log.d("data 0:",arrayOfDataFromMcu[1]);*/
-                            }
-                        });
-                    }
-                } catch (InterruptedException e)
-                {
-                }
-            }
-        };
-
-        thread1.start();
     }
     //Preference.OnPreferenceChangeListener()
 
@@ -327,25 +325,14 @@ public class MainScreen extends AppCompatActivity  {
         return ((characteristic.getProperties() & BluetoothGattCharacteristic.PROPERTY_NOTIFY) != 0);
     }
 
-    private void showColorDistance(String[] data){
+    private void showTxtDistance(String[] data){
+
         float senzor1 = Float.parseFloat(data[0]);
         float senzor2 = Float.parseFloat(data[1]);
         float senzor3 = Float.parseFloat(data[2]);
         float senzor4 = Float.parseFloat(data[3]);
 
-        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
-        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
-        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
-        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
-        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
-        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
-        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
-        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
-        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
-        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
-        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
-        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
-
+        double senzor1x = 0.2;
 
         int orange = Color.parseColor("#ff6600");
         int yellow = Color.parseColor("#f5f242");
@@ -353,8 +340,107 @@ public class MainScreen extends AppCompatActivity  {
         int transparent= Color.parseColor("#00000000");
 
         //senzor1
+        if(senzor1 >0.01 && senzor1 < 2)
+        {
+            txtSenzor1.setText(data[0]);
+        }else{
+            txtSenzor1.setText("");
+        }
+        if(senzor1 > 1  && senzor1 < 2){
+            txtSenzor1.setTextColor(yellow);
+        }
+        else if(senzor1 <=1 && senzor1>=0.5){
+            txtSenzor1.setTextColor(orange);
+        }
+        else if(senzor1 < 0.5 && senzor1 >0.1 ){
+            txtSenzor1.setTextColor(red);
+        }
+        else{
+            txtSenzor1.setTextColor(transparent);
+        }
+        //senzor2
+        if(senzor2 >0.01 && senzor2 < 2)
+        {
+            txtSenzor2.setText(data[1]);
+        }else{
+            txtSenzor2.setText("");
+        }
+        if(senzor2 > 1  && senzor2 < 2){
+            txtSenzor2.setTextColor(yellow);
+        }
+        else if(senzor2 <=1 && senzor2>=0.5){
+            txtSenzor2.setTextColor(yellow);
+        }
+        else if(senzor2 < 0.5 && senzor2>0.1 ){
+            txtSenzor2.setTextColor(yellow);
+        }
+        else{
+            txtSenzor2.setTextColor(transparent);
+        }
 
-        if(senzor1 > 1){
+        //senzor3
+        if(senzor3 >0.01 && senzor3 < 2)
+        {
+            txtSenzor3.setText(data[2]);
+        }else{
+            txtSenzor3.setText("");
+        }
+        if(senzor3 > 1  && senzor3 < 2){
+            txtSenzor3.setTextColor(yellow);
+        }
+        else if(senzor3 <=1 && senzor3>=0.5){
+            txtSenzor3.setTextColor(yellow);
+        }
+        else if(senzor3< 0.5 && senzor3>0.1 ){
+            txtSenzor3.setTextColor(yellow);
+        }
+        else{
+            txtSenzor3.setTextColor(transparent);
+        }
+
+        //senzor4
+        if(senzor4 >0.01 && senzor4 < 2)
+        {
+            txtSenzor4.setText(data[3]);
+        }else{
+            txtSenzor4.setText("");
+        }
+        if(senzor4 > 1  && senzor4 < 2){
+            txtSenzor2.setTextColor(yellow);
+        }
+        else if(senzor4 <=1 && senzor4>=0.5){
+            txtSenzor2.setTextColor(yellow);
+        }
+        else if(senzor4 < 0.5 && senzor4>0.1 ){
+            txtSenzor4.setTextColor(yellow);
+        }
+        else{
+            txtSenzor4.setTextColor(transparent);
+        }
+
+
+    }
+    private void hideTxtDisance(){
+        txtSenzor1.setVisibility(View.INVISIBLE);
+        txtSenzor2.setVisibility(View.INVISIBLE);
+        txtSenzor3.setVisibility(View.INVISIBLE);
+        txtSenzor4.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void showGraphDistance(String[] data){
+
+        float senzor1 = Float.parseFloat(data[0]);
+        float senzor2 = Float.parseFloat(data[1]);
+        float senzor3 = Float.parseFloat(data[2]);
+        float senzor4 = Float.parseFloat(data[3]);
+
+        int orange = Color.parseColor("#ff6600");
+        int yellow = Color.parseColor("#f5f242");
+        int red = Color.parseColor("#f70000");
+        int transparent= Color.parseColor("#00000000");
+
+        if(senzor1 > 1  && senzor1 < 2){
             senzor1lvl1.setColorFilter(yellow);
         }else {
             senzor1lvl1.setColorFilter(transparent);
@@ -378,7 +464,7 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor2
-        if(senzor2 > 1){
+        if(senzor2 > 1  && senzor2 < 2){
             senzor2lvl1.setColorFilter(yellow);
         }else {
             senzor2lvl1.setColorFilter(transparent);
@@ -402,7 +488,7 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor3
-        if(senzor3 > 1){
+        if(senzor3 > 1  && senzor3 < 2){
             senzor3lvl1.setColorFilter(yellow);
         }else {
             senzor3lvl1.setColorFilter(transparent);
@@ -426,7 +512,7 @@ public class MainScreen extends AppCompatActivity  {
         }
 
         //senzor4
-        if(senzor4 > 1){
+        if(senzor4 > 1 && senzor4 < 2){
             senzor4lvl1.setColorFilter(yellow);
         }else {
             senzor4lvl1.setColorFilter(transparent);
@@ -449,8 +535,27 @@ public class MainScreen extends AppCompatActivity  {
             senzor4lvl3.setColorFilter(transparent);
         }
 
-
     }
+    private void hideColorDistance(){
+        senzor1lvl1.setVisibility(View.INVISIBLE);
+        senzor1lvl2.setVisibility(View.INVISIBLE);
+        senzor1lvl3.setVisibility(View.INVISIBLE);
+        senzor2lvl1.setVisibility(View.INVISIBLE);
+        senzor2lvl2.setVisibility(View.INVISIBLE);
+        senzor2lvl3.setVisibility(View.INVISIBLE);
+        senzor3lvl1.setVisibility(View.INVISIBLE);
+        senzor3lvl2.setVisibility(View.INVISIBLE);
+        senzor3lvl3.setVisibility(View.INVISIBLE);
+        senzor4lvl1.setVisibility(View.INVISIBLE);
+        senzor4lvl2.setVisibility(View.INVISIBLE);
+        senzor4lvl3.setVisibility(View.INVISIBLE);
+        level1.setVisibility(View.INVISIBLE);
+        level2.setVisibility(View.INVISIBLE);
+        firstDistance.setVisibility(View.INVISIBLE);
+        secondDistance.setVisibility(View.INVISIBLE);
+        thirdDistance.setVisibility(View.INVISIBLE);
+    }
+
 
 
 }
