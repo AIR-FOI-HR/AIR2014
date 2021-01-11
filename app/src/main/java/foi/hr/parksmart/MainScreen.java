@@ -49,7 +49,7 @@ public class MainScreen extends AppCompatActivity  {
     private static final UUID ESP32_CHARACTERISTIC_UUID = UUID.fromString("beb5483e-36e1-4688-b7f5-ea07361b26a8");
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
-    private static String sosNumber;
+    private static String sosNumber,mod;
     private BluetoothDevice bleDevice;
     String dataFromMcu;
     String[] arrayOfDataFromMcu={"0.00","0.00","0.00","0.00"};
@@ -67,19 +67,9 @@ public class MainScreen extends AppCompatActivity  {
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
+        mod= sharedPreferences.getString("mod_elements","txtMod");
+        Log.d("modovi", mod);
 
-        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
-        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
-        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
-        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
-        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
-        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
-        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
-        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
-        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
-        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
-        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
-        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
 
         // tu trebamo napraviti da se provjera koji je MOD uključen
 
@@ -168,6 +158,7 @@ public class MainScreen extends AppCompatActivity  {
         if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
+        mod= sharedPreferences.getString("mod_elements","txtMod");
     }
 
 
@@ -342,6 +333,18 @@ public class MainScreen extends AppCompatActivity  {
         float senzor3 = Float.parseFloat(data[2]);
         float senzor4 = Float.parseFloat(data[3]);
 
+        senzor1lvl1 = (ImageView) findViewById(R.id.idSenzor1Lvl1);
+        senzor1lvl2 = (ImageView) findViewById(R.id.idSenzor1Lvl2);
+        senzor1lvl3 = (ImageView) findViewById(R.id.idSenzor1Lvl3);
+        senzor2lvl1 = (ImageView) findViewById(R.id.idSenzor2Lvl1);
+        senzor2lvl2 = (ImageView) findViewById(R.id.idSenzor2Lvl2);
+        senzor2lvl3 = (ImageView) findViewById(R.id.idSenzor2Lvl3);
+        senzor3lvl1 = (ImageView) findViewById(R.id.idSenzor3Lvl1);
+        senzor3lvl2 = (ImageView) findViewById(R.id.idSenzor3Lvl2);
+        senzor3lvl3 = (ImageView) findViewById(R.id.idSenzor3Lvl3);
+        senzor4lvl1 = (ImageView) findViewById(R.id.idSenzor4Lvl1);
+        senzor4lvl2 = (ImageView) findViewById(R.id.idSenzor4Lvl2);
+        senzor4lvl3 = (ImageView) findViewById(R.id.idSenzor4Lvl3);
 
 
         int orange = Color.parseColor("#ff6600");

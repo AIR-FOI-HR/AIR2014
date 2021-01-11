@@ -3,6 +3,7 @@ package foi.hr.parksmart;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SharedMemory;
@@ -27,7 +28,7 @@ import java.util.regex.Pattern;
 
 public class SettingsActivity extends AppCompatActivity {
 
-
+    String vrijednost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +83,9 @@ public class SettingsActivity extends AppCompatActivity {
                     settingsAlert.setMessage("Format unesenog broja nije ispravan !");
                     settingsAlert.show();
                 }
+            vrijednost =sharedPreferences.getString("mod_elements","txtMod");
+                Log.d("mod",vrijednost);
+
         }
     };
 
