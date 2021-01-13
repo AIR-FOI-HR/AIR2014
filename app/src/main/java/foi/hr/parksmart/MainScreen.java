@@ -3,18 +3,10 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothGatt;
-import android.bluetooth.BluetoothGattCallback;
-import android.bluetooth.BluetoothGattCharacteristic;
-import android.bluetooth.BluetoothGattDescriptor;
-import android.bluetooth.BluetoothGattService;
-import android.bluetooth.BluetoothProfile;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,18 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.view.View.OnClickListener;
-import android.widget.TextView;
 
+import com.example.core.SensorDataListener;
+import com.example.ultrasoundsensor.UltraSoundSensor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.UUID;
-
-import foi.hr.parksmart.BluetoothLE.BleDataListener;
-import foi.hr.parksmart.BluetoothLE.BleHandler;
 
 public class MainScreen extends AppCompatActivity  {
 
@@ -68,16 +52,16 @@ public class MainScreen extends AppCompatActivity  {
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
 
-        BleHandler bleConnector = new BleHandler();
+        UltraSoundSensor ultraSoundSensor = new UltraSoundSensor();
 
-        bleConnector.bleDataListener = new BleDataListener() {
+        ultraSoundSensor.sensorDataListener = new SensorDataListener() {
             @Override
-            public void loadData(String sensorData) {
+            public void GetSensorData(String sensorData) {
                 Log.i("SensorData:", sensorData);
             }
         };
 
-        bleConnector.EstablishConnection(bleDevice, this);
+        ultraSoundSensor.InitBleConnection(bleDevice, this);
     }
     //Preference.OnPreferenceChangeListener()
 
@@ -119,4 +103,6 @@ public class MainScreen extends AppCompatActivity  {
         Intent intentSettings=new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
     }
+
+
 }

@@ -1,4 +1,4 @@
-package foi.hr.parksmart.BluetoothLE;
+package com.example.core.BluetoothLE;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
