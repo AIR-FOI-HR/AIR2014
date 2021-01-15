@@ -30,6 +30,12 @@ public class MainScreen extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).
+                    add(R.id.fragment_container_view, UltraSoundSensor.class, null).commit();
+        }
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
@@ -103,6 +109,4 @@ public class MainScreen extends AppCompatActivity  {
         Intent intentSettings=new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
     }
-
-
 }
