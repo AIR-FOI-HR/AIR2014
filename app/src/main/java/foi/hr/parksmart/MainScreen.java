@@ -3,6 +3,9 @@ package foi.hr.parksmart;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.preference.PreferenceManager;
 
 import android.Manifest;
@@ -15,29 +18,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.core.FragmentListener;
 import com.example.core.SensorDataListener;
 import com.example.ultrasoundsensor.UltraSoundSensor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainScreen extends AppCompatActivity  {
+import foi.hr.parksmart.BluetoothLowEnergy.BleDataListener;
+import foi.hr.parksmart.BluetoothLowEnergy.BleHandler;
+
+public class MainScreen extends AppCompatActivity implements BleDataListener, FragmentListener {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
+    private UltraSoundSensor ultraSoundSensor;
+    public View fragView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+        /*
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).
                     add(R.id.fragment_container_view, UltraSoundSensor.class, null).commit();
-        }
+        }*/
+
+        /*
+        //Stapicev nacin
+        FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
+        fts.replace(R.id.fragment_container_view, new UltraSoundSensor());
+        fts.commit();*/
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
-       // if(sosNumber=="")sosNumber="+385112";
+        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
 
@@ -57,17 +73,12 @@ public class MainScreen extends AppCompatActivity  {
         });
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
+        ultraSoundSensor = new UltraSoundSensor();
 
-        UltraSoundSensor ultraSoundSensor = new UltraSoundSensor();
-
-        ultraSoundSensor.sensorDataListener = new SensorDataListener() {
-            @Override
-            public void GetSensorData(String sensorData) {
-                Log.i("SensorData:", sensorData);
-            }
-        };
-
-        ultraSoundSensor.InitBleConnection(bleDevice, this);
+        Fragment frag = new UltraSoundSensor(this);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.fragment_container_view, frag).commit();
+        fragmentManager.beginTransaction().add(R.id.fragment_container_view, frag).commit();
     }
     //Preference.OnPreferenceChangeListener()
 
@@ -81,7 +92,6 @@ public class MainScreen extends AppCompatActivity  {
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
     }
-
 
     public void hideButton(View view) {
         FloatingActionButton BtnZvuk = findViewById(R.id.btnZvuk);
@@ -108,5 +118,23 @@ public class MainScreen extends AppCompatActivity  {
     {
         Intent intentSettings=new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
+    }
+
+    @Override
+    public void loadData(String sensorData) {
+        Log.i("SensorData", sensorData);
+
+        String[] arrayOfDataFromMcu = sensorData.split(",");
+        ultraSoundSensor.showGraphDistance(arrayOfDataFromMcu, fragView);
+    }
+
+    @Override
+    public void getFragmentView(View framentView) {
+        Log.i("ViewDohvacen: ", " Da");
+
+        fragView = framentView;
+
+        BleHandler bleConnectionHandler = new BleHandler(this);
+        bleConnectionHandler.EstablishConnection(bleDevice, this);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.core.BluetoothLE;
+package foi.hr.parksmart.BluetoothLowEnergy;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
@@ -9,11 +9,11 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
 import java.util.UUID;
 
 public class BleHandler {
-
     //BLE MTU size
     //payload size = MTU - 3
     private static final int GATT_MAX_MTU_SIZE = 46;
@@ -24,6 +24,10 @@ public class BleHandler {
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
     public BleDataListener bleDataListener;
+
+    public BleHandler (BleDataListener bleDataListener){
+        this.bleDataListener = bleDataListener;
+    }
 
     //Bluetooth connection
     public void EstablishConnection(BluetoothDevice bleDevice, Context msContext) {
@@ -70,7 +74,6 @@ public class BleHandler {
                     //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
                     //Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));  //ovo radi
                     bleDataListener.loadData(hexToString(byteArrayToString(characteristic.getValue())));
-
                 }
                 @Override
                 public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
