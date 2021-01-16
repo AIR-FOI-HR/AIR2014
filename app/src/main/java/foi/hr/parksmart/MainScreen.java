@@ -1,6 +1,7 @@
 package foi.hr.parksmart;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -26,7 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import foi.hr.parksmart.BluetoothLowEnergy.BleDataListener;
 import foi.hr.parksmart.BluetoothLowEnergy.BleHandler;
 
-public class MainScreen extends AppCompatActivity implements BleDataListener, FragmentListener {
+public class MainScreen extends AppCompatActivity /* implements BleDataListener, FragmentListener*/ {
 
     private static final int REQUEST_PHONE_CALL = 1;
 
@@ -75,10 +76,16 @@ public class MainScreen extends AppCompatActivity implements BleDataListener, Fr
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
         ultraSoundSensor = new UltraSoundSensor();
 
-        Fragment frag = new UltraSoundSensor(this);
+       /* Fragment frag = new UltraSoundSensor(this);
         FragmentManager fragmentManager = getSupportFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.fragment_container_view, frag).commit();
         fragmentManager.beginTransaction().add(R.id.fragment_container_view, frag).commit();
+*/
+        /*
+        * Služi za prikazivanje dark/light moda
+        */
+
+
     }
     //Preference.OnPreferenceChangeListener()
 
@@ -119,7 +126,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener, Fr
         Intent intentSettings=new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
     }
-
+/*
     @Override
     public void loadData(String sensorData) {
         Log.i("SensorData", sensorData);
@@ -136,5 +143,5 @@ public class MainScreen extends AppCompatActivity implements BleDataListener, Fr
 
         BleHandler bleConnectionHandler = new BleHandler(this);
         bleConnectionHandler.EstablishConnection(bleDevice, this);
-    }
+    }*/
 }

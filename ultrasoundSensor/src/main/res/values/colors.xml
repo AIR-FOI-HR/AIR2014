@@ -7,6 +7,8 @@
     <color name="dark_blue_700">#114B6A</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Sensor color -->
     <color name="yellow">#ffff00</color>
     <color name="orange">#ff6600</color>
     <color name="red">#FF0000</color>

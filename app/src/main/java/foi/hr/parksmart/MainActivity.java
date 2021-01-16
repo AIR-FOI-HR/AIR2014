@@ -3,6 +3,7 @@ package foi.hr.parksmart;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import android.bluetooth.le.ScanSettings;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,7 +41,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener {
+public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener{
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
@@ -52,11 +54,19 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     Adapter adapter;
     ArrayList<BluetoothDevice> bleDevices = new ArrayList<>();;
     BluetoothLeScanner bleScanner;
-
+    SharedPreferences sharedPreferencesMod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sharedPreferencesMod = getSharedPreferences("idDarkMode",0);
+        Boolean booleanMod = sharedPreferencesMod.getBoolean("keyDarkMode",false);
+        if(booleanMod) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
 
         TextView greetings = (TextView) findViewById(R.id.textView);
         greetings.setText("Dobro došli!");
@@ -76,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     private void showRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this, bleDevices,this);
+        adapter = new Adapter(this, bleDevices,  this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -160,11 +170,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     }
 
     private void stopBleScan() {
-        /*
-        zato jer bi se teoretski tu metodu moglo pozvati i
-        prije nego je uopce skeniranje pokrenetu,
-        tj. kad bleScanner objekt nije inicijaliziran
-        */
+
         if(bleScanner != null){
             bleScanner.stopScan(scanCallback);
         }
@@ -231,13 +237,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     }
 
-    // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 
-    protected void GoToMainScreen(BluetoothDevice bleDevice){
-        Intent intent = new Intent(MainActivity.this, MainScreen.class);
-        intent.putExtra("BLE_DEVICE", bleDevice);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
+        // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
+
+        protected void GoToMainScreen(BluetoothDevice bleDevice) {
+            Intent intent = new Intent(MainActivity.this, MainScreen.class);
+            // intent.putExtra("BLE_DEVICE", bleDevice);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+        }
     }
-}
