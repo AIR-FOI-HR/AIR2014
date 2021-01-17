@@ -6,11 +6,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SharedMemory;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
 import android.content.SharedPreferences;
 import androidx.preference.PreferenceManager;
@@ -20,11 +22,11 @@ import androidx.preference.TwoStatePreference;
 import java.util.regex.Pattern;
 
 public class SettingsActivity extends AppCompatActivity {
+    SharedPreferences sharedPreferencesMod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-
 
         if (savedInstanceState == null) {
             getSupportFragmentManager()
@@ -34,10 +36,22 @@ public class SettingsActivity extends AppCompatActivity {
         }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
         }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+
+
+        sharedPreferencesMod = getSharedPreferences("idDarkMode",0);
+        Boolean booleanMod = sharedPreferencesMod.getBoolean("keyDarkMode",false);
+        if(booleanMod) {
+            Log.d("SharedPrefYes", booleanMod.toString());
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            SharedPreferences.Editor editora = sharedPreferencesMod.edit();
+            editora.putBoolean("keyDarkMode", true);
+            editora.commit();
+        }
     }
 
     
@@ -71,6 +85,21 @@ public class SettingsActivity extends AppCompatActivity {
                     settingsAlert.setMessage("Format unesenog broja nije ispravan !");
                     settingsAlert.show();
                 }
+            Boolean darkMode = sharedPreferences.getBoolean("keyDarkMode",false);
+            if(darkMode){
+                Log.d("Unutra",darkMode.toString());
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                SharedPreferences.Editor editor = sharedPreferencesMod.edit();
+                editor.putBoolean("keyDarkMode",true);
+                editor.commit();
+            }
+            else{
+                Log.d("UnutraNO",darkMode.toString());
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                SharedPreferences.Editor editor = sharedPreferencesMod.edit();
+                editor.putBoolean("keyDarkMode",false);
+                editor.commit();
+            }
         }
     };
 

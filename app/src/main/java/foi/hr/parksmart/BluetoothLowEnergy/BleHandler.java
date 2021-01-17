@@ -1,5 +1,6 @@
-package com.example.core.BluetoothLE;
+package foi.hr.parksmart.BluetoothLowEnergy;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -9,11 +10,15 @@ import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.UUID;
 
-public class BleHandler {
+import foi.hr.parksmart.MainScreen;
+import foi.hr.parksmart.R;
 
+public class BleHandler {
     //BLE MTU size
     //payload size = MTU - 3
     private static final int GATT_MAX_MTU_SIZE = 46;
@@ -24,6 +29,11 @@ public class BleHandler {
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
     public BleDataListener bleDataListener;
+
+
+    public BleHandler (BleDataListener bleDataListener){
+        this.bleDataListener = bleDataListener;
+    }
 
     //Bluetooth connection
     public void EstablishConnection(BluetoothDevice bleDevice, Context msContext) {
@@ -43,7 +53,9 @@ public class BleHandler {
                                na mobitelu) i tražiti od korisnika da upali Bluetooth i
                                pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
                                 nakon čega se ponovno poziva funkcija EstablishConnection()
-                            * */
+                            */
+
+                            //bleDataListener.showBluetoothConnectionButton();
                             gatt.close();
                         }
                     } else {
@@ -70,7 +82,6 @@ public class BleHandler {
                     //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
                     //Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));  //ovo radi
                     bleDataListener.loadData(hexToString(byteArrayToString(characteristic.getValue())));
-
                 }
                 @Override
                 public void onMtuChanged(BluetoothGatt gatt, int mtu, int status) {
