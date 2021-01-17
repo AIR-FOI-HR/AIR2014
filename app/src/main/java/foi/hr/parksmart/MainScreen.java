@@ -33,6 +33,8 @@ import foi.hr.parksmart.BluetoothLowEnergy.BleHandler;
 public class MainScreen extends AppCompatActivity implements BleDataListener {
 
     private static final int REQUEST_PHONE_CALL = 1;
+    private static final String usSensorPrefix = "SmartPark_Centar_Unit_US";
+    private static final String irSensorPrefix = "SmartPark_Centar_Unit_IR";
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
@@ -81,7 +83,12 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
 
         if(savedInstanceState == null){
-            distanceSensor = new UltraSoundSensor();
+
+            if(bleDevice.getName().contains(usSensorPrefix))
+                distanceSensor = new UltraSoundSensor();
+            else if (bleDevice.getName().contains(irSensorPrefix))
+                distanceSensor = new IrSensor();
+
             //distanceSensor = new IrSensor();
             //Fragment frag = new UltraSoundSensor(this);
             FragmentManager fragmentManager = getSupportFragmentManager();

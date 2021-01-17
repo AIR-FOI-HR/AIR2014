@@ -33,18 +33,15 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.UUID;
 
 @RequiresApi(api = Build.VERSION_CODES.N)
 public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener{
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
+    //private static final UUID ESP32_SERVICE_UUID = UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
 
     public Dialog dialog;
     TextView printWarning;
@@ -67,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-
         TextView greetings = (TextView) findViewById(R.id.textView);
         greetings.setText("Dobro došli!");
         ImageView myImageView = (ImageView) findViewById(R.id.imageView);
@@ -76,7 +72,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         dialog = new Dialog(MainActivity.this);
         dialog.setContentView(R.layout.bluetooth_message);
         dialog.setCanceledOnTouchOutside(false);
-
 
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
@@ -160,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
                     .build();
 
             if (bleScanner != null) {
-                bleScanner.startScan(scanFilters, scanSettings, scanCallback);
+                bleScanner.startScan(null, scanSettings, scanCallback);
                 Log.d("ScanInfo", "scan started");
             }  else {
                 Log.e("ScanInfo", "could not get scanner object");
@@ -181,9 +176,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
 
-            Log.i("ScanCallback", result.getDevice().getName());
-            if(!bleDevices.contains(result.getDevice()))
-                bleDevices.add(result.getDevice());
+            if(result.getDevice().getName().contains("SmartPark_Centar_Unit")){
+                Log.i("ScanCallback", result.getDevice().getName());
+                if(!bleDevices.contains(result.getDevice()))
+                    bleDevices.add(result.getDevice());
+            }
         }
     };
 
@@ -233,7 +230,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         GoToMainScreen(bleDevices.get(position));
 
         // stavi povezivanje s uređajem
-
     }
         // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 
