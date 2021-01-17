@@ -28,7 +28,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
 
-
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -37,10 +36,12 @@ public class SettingsActivity extends AppCompatActivity {
         }
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(false);
         }
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.registerOnSharedPreferenceChangeListener(onSharedPreferenceChangeListener);
+
 
         sharedPreferencesMod = getSharedPreferences("idDarkMode",0);
         Boolean booleanMod = sharedPreferencesMod.getBoolean("keyDarkMode",false);

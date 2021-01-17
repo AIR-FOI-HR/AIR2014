@@ -1,5 +1,6 @@
 package foi.hr.parksmart;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -37,6 +38,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private BleHandler bleConnectionHandler;
     private Dialog dialogTurnedOFF, missingDevice;
     private IotSensor distanceSensor;
+    private boolean showDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,12 +80,24 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
 
-        distanceSensor = new UltraSoundSensor();
-        //Fragment frag = new UltraSoundSensor(this);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.fragment_container_view, frag).commit();
-        fragmentManager.beginTransaction().add(R.id.fragment_container_view, (Fragment) distanceSensor).commit();
-        //modulFragmentView = frag.getView();
+        if(savedInstanceState == null){
+            distanceSensor = new UltraSoundSensor();
+            //distanceSensor = new IrSensor();
+            //Fragment frag = new UltraSoundSensor(this);
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            //fragmentManager.beginTransaction().replace(R.id.fragment_container_view, frag).commit();
+            fragmentManager.beginTransaction().add(R.id.fragment_container_view, (Fragment) distanceSensor).commit();
+            //modulFragmentView = frag.getView();
+
+            showDistance = true;
+            Log.i("Actvty:", "Create");
+        }
+        else{
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            distanceSensor = (IotSensor) fragmentManager.getFragment(savedInstanceState, "fragmentDistance");
+            showDistance = true;
+            Log.i("Actvty:", "Restore");
+        }
 
         bleConnectionHandler = new BleHandler(this);
         bleConnectionHandler.EstablishConnection(bleDevice, this);
@@ -100,6 +114,9 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
+
+        Log.i("Resume: ", "ulazim");
+        showDistance = true;
     }
 
     public void hideButton(View view)
@@ -126,17 +143,36 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         callIntent.setData(Uri.parse(sosPhoneNumber));
         startActivity(callIntent);
     }
+
     private void OpenSettingsActivity()
     {
-        Intent intentSettings=new Intent(this, SettingsActivity.class);
+        showDistance = false;
+
+        Intent intentSettings = new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
     }
 
     @Override
     public void loadData(String sensorData)
     {
-        String[] arrayOfDataFromMcu = sensorData.split(",");
-        distanceSensor.showGraphDistance(arrayOfDataFromMcu);
+        Log.i("SensorData", sensorData);
+        if(showDistance){
+            String[] arrayOfDataFromMcu = sensorData.split(",");
+            distanceSensor.showGraphDistance(arrayOfDataFromMcu);
+        }
+    }
+
+    /*
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("Destroied", "Da");
+    }*/
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, "fragmentDistance", (Fragment) distanceSensor);
     }
 
     /*

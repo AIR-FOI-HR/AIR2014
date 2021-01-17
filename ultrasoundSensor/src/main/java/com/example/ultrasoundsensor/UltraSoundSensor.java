@@ -3,6 +3,7 @@ package com.example.ultrasoundsensor;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,11 +50,21 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         txtSenzor3 = view.findViewById(R.id.txtSenzor3);
         txtSenzor4 = view.findViewById(R.id.txtSenzor4);
 
+        Log.i("Fragment: ", "inicijaliziran");
+
         return view;
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("Fragment", "Destroied");
+    }
+
+    @Override
     public void showGraphDistance(String[] data){
+
+        Log.i("showGraphDistance:", "Ulazim");
 
         float senzor1 = Float.parseFloat(data[0]);
         float senzor2 = Float.parseFloat(data[1]);
