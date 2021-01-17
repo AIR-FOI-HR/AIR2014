@@ -15,12 +15,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.core.IotSensor;
+import com.google.android.material.slider.Slider;
 
 public class UltraSoundSensor extends Fragment implements IotSensor {
 
     private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
             ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3,level1,level2;
     TextView firstDistance , secondDistance, thirdDistance, txtSenzor1,txtSenzor2,txtSenzor3,txtSenzor4;
+    Slider distanceSlider;
 
     @Nullable
     @Override
@@ -49,6 +51,7 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         txtSenzor2 = view.findViewById(R.id.txtSenzor2);
         txtSenzor3 = view.findViewById(R.id.txtSenzor3);
         txtSenzor4 = view.findViewById(R.id.txtSenzor4);
+        distanceSlider = view.findViewById(R.id.slider);
 
         Log.i("Fragment: ", "inicijaliziran");
 
@@ -76,14 +79,29 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         int red = Color.parseColor("#f70000");
         int transparent= Color.parseColor("#00000000");
 
+        Log.i("Slider", String.valueOf(distanceSlider.getValue()));
+
+        /*
+        float minSensDistance = distanceSlider.getValue();
+        if(senzor1 < minSensDistance)
+            senzor1 = (float) 0.11;
+        if(senzor2 < minSensDistance)
+            senzor2 = (float) 0.11;
+        if(senzor3 < minSensDistance)
+            senzor3 = (float) 0.11;
+        if(senzor4 < minSensDistance)
+            senzor4 = (float) 0.11;
+
+         */
+
         if(senzor1 > 1  && senzor1 < 2){
             senzor1lvl1.setColorFilter(yellow);
         }
-        else if (senzor1 <=1 && senzor1>=0.5){
+        else if (senzor1 <= 1 && senzor1 >= 0.5){
             senzor1lvl1.setColorFilter(yellow); //yellow
             senzor1lvl2.setColorFilter(orange); //orange
         }
-        else if(senzor1 < 0.5 && senzor1 > 0.1 ){
+        else if(senzor1 < 0.5 && senzor1 >= 0.0 ){
             senzor1lvl1.setColorFilter(yellow);
             senzor1lvl2.setColorFilter(orange);
             senzor1lvl3.setColorFilter(red);
@@ -98,11 +116,11 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         if(senzor2 > 1  && senzor2 < 2){
             senzor2lvl1.setColorFilter(yellow);
         }
-        else if(senzor2 <=1 && senzor2>=0.5){
+        else if(senzor2 <= 1 && senzor2 >= 0.5){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
         }
-        else if(senzor2 < 0.5 && senzor2 >0.1){
+        else if(senzor2 < 0.5 && senzor2 > 0.0){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
             senzor2lvl3.setColorFilter(red);
@@ -117,11 +135,11 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         if(senzor3 > 1  && senzor3 < 2){
             senzor3lvl1.setColorFilter(yellow);
         }
-        else if(senzor3 <=1 && senzor3>=0.5){
+        else if(senzor3 <= 1 && senzor3 >= 0.5){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
         }
-        else if(senzor3 < 0.5 && senzor3 >0.1){
+        else if(senzor3 < 0.5 && senzor3 > 0.0){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
             senzor3lvl3.setColorFilter(red);
@@ -136,11 +154,11 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         if(senzor4 > 1 && senzor4 < 2){
             senzor4lvl1.setColorFilter(yellow);
         }
-        else if(senzor4 <=1 && senzor4>=0.5){
+        else if(senzor4 <= 1 && senzor4 >= 0.5){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
         }
-        else if(senzor4 < 0.5 && senzor4 >0.1){
+        else if(senzor4 < 0.5 && senzor4 > 0.0){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
             senzor4lvl3.setColorFilter(red);

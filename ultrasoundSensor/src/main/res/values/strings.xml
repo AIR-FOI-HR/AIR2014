@@ -1,44 +1,5 @@
 <resources>
-    <string name="app_name">ParkSmart</string>
-    <string name="soundOn" />
-    <string name="soundOff" />
-    <string name="mainScreenCar" />
-    <string name="title_activity_settings">Settings</string>
-
-    <!-- Preference Titles -->
-    <string name="settings_header">Postavke</string>
-    <string name="sosSettings">Postavke SOS</string>
-    <string name="soundSettings">Postavke zvuka</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
-    <string name="lbl_device_name">Device nema:</string>
-    <string name="txt_device_name">Device name</string>
-    <string name="lbl_mac_address">MAC address:</string>
-    <string name="txt_mac_address">MAC address</string>
     <string name="distance1"><![CDATA[Prikaz u cm <50]]></string>
     <string name="distance2"><![CDATA[50>= i =<100]]></string>
     <string name="distance3"><![CDATA[100> i <160]]></string>
-
-
-    <!-- Fragmet elements-->
-    <string name="default_value">txtMod</string>
-    <string-array name="frag_elem">
-        <item>Tekstualni prikaz</item>
-        <item>Grafički prikaz</item>
-    </string-array>
-
-    <string-array name="frag_elem_values">
-        <item>txtMod</item>
-        <item>graphMod</item>
-    </string-array>
 </resources>

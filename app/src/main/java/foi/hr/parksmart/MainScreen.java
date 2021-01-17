@@ -23,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.core.IotSensor;
+import com.example.irsensor.IrSensor;
 import com.example.ultrasoundsensor.UltraSoundSensor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -38,7 +39,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private BleHandler bleConnectionHandler;
     private Dialog dialogTurnedOFF, missingDevice;
     private IotSensor distanceSensor;
-    private boolean showDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -89,13 +89,11 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
             fragmentManager.beginTransaction().add(R.id.fragment_container_view, (Fragment) distanceSensor).commit();
             //modulFragmentView = frag.getView();
 
-            showDistance = true;
             Log.i("Actvty:", "Create");
         }
         else{
             FragmentManager fragmentManager = getSupportFragmentManager();
             distanceSensor = (IotSensor) fragmentManager.getFragment(savedInstanceState, "fragmentDistance");
-            showDistance = true;
             Log.i("Actvty:", "Restore");
         }
 
@@ -116,7 +114,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
 
         Log.i("Resume: ", "ulazim");
-        showDistance = true;
     }
 
     public void hideButton(View view)
@@ -146,8 +143,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
 
     private void OpenSettingsActivity()
     {
-        showDistance = false;
-
         Intent intentSettings = new Intent(this, SettingsActivity.class);
         startActivity(intentSettings);
     }
@@ -156,10 +151,8 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     public void loadData(String sensorData)
     {
         Log.i("SensorData", sensorData);
-        if(showDistance){
-            String[] arrayOfDataFromMcu = sensorData.split(",");
-            distanceSensor.showGraphDistance(arrayOfDataFromMcu);
-        }
+        //String[] arrayOfDataFromMcu = sensorData.split(",");
+        distanceSensor.showGraphDistance(sensorData.split(","));
     }
 
     /*

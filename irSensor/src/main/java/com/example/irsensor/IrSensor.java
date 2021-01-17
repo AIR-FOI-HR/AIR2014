@@ -2,7 +2,9 @@ package com.example.irsensor;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,45 +16,20 @@ import com.example.core.IotSensor;
 
 public class IrSensor extends Fragment implements IotSensor {
 
-    private ImageView senzor1lvl1,senzor1lvl2, senzor1lvl3, senzor2lvl1, senzor2lvl2, senzor2lvl3, senzor3lvl1, senzor3lvl2
-            ,senzor3lvl3, senzor4lvl1, senzor4lvl2, senzor4lvl3,level1,level2;
-    TextView firstDistance , secondDistance, thirdDistance, txtSenzor1,txtSenzor2,txtSenzor3,txtSenzor4;
-    volatile String[] arrayOfDataFromMcu={"1.00","1.00","1.00","1.00"};
-    //View usView;
+    private ImageView senzor1lvl3, senzor2lvl3, senzor3lvl3, senzor4lvl3;
 
-    /*
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.graphview,container,false);
-    }*/
+        View sensorDataView = inflater.inflate(R.layout.irview,container,false);
 
-   /* Inicijalizacija ide u onCreateViea, ako bude Kolar ovo radio, neka se prvo javi
-    Miljenku da mu objasni kaj treba
-
-   senzor1lvl1 =  sensorDataView.findViewById(R.id.idSenzor1Lvl1);
-        senzor1lvl2 =  sensorDataView.findViewById(R.id.idSenzor1Lvl2);
         senzor1lvl3 =  sensorDataView.findViewById(R.id.idSenzor1Lvl3);
-        senzor2lvl1 =  sensorDataView.findViewById(R.id.idSenzor2Lvl1);
-        senzor2lvl2 =  sensorDataView.findViewById(R.id.idSenzor2Lvl2);
         senzor2lvl3 =  sensorDataView.findViewById(R.id.idSenzor2Lvl3);
-        senzor3lvl1 =  sensorDataView.findViewById(R.id.idSenzor3Lvl1);
-        senzor3lvl2 =  sensorDataView.findViewById(R.id.idSenzor3Lvl2);
         senzor3lvl3 =  sensorDataView.findViewById(R.id.idSenzor3Lvl3);
-        senzor4lvl1 =  sensorDataView.findViewById(R.id.idSenzor4Lvl1);
-        senzor4lvl2 =  sensorDataView.findViewById(R.id.idSenzor4Lvl2);
         senzor4lvl3 =  sensorDataView.findViewById(R.id.idSenzor4Lvl3);
-        level1 =  sensorDataView.findViewById(R.id.idLevel);
-        level2 = sensorDataView.findViewById(R.id.idLevel2);
-        firstDistance =  sensorDataView.findViewById(R.id.textView2);
-        secondDistance = sensorDataView.findViewById(R.id.textView3);
-        thirdDistance = sensorDataView.findViewById(R.id.textView4);
-        txtSenzor1 =  sensorDataView.findViewById(R.id.txtSenzor1);
-        txtSenzor2 = sensorDataView.findViewById(R.id.txtSenzor2);
-        txtSenzor3 = sensorDataView.findViewById(R.id.txtSenzor3);
-        txtSenzor4 = sensorDataView.findViewById(R.id.txtSenzor4);
-    */
 
+        return sensorDataView;
+    }
 
     @Override
     public void showGraphDistance(String[] data){
@@ -62,84 +39,38 @@ public class IrSensor extends Fragment implements IotSensor {
         float senzor3 = Float.parseFloat(data[2]);
         float senzor4 = Float.parseFloat(data[3]);
 
-        int orange = Color.parseColor("#ff6600");
-        int yellow = Color.parseColor("#f5f242");
         int red = Color.parseColor("#f70000");
         int transparent= Color.parseColor("#00000000");
 
-
-        if(senzor1 > 1  && senzor1 < 2){
-            senzor1lvl1.setColorFilter(yellow);
-        }
-        else if (senzor1 <=1 && senzor1>=0.5){
-            senzor1lvl1.setColorFilter(yellow); //yellow
-            senzor1lvl2.setColorFilter(orange); //orange
-        }
-        else if(senzor1 < 0.5 && senzor1 > 0.1 ){
-            senzor1lvl1.setColorFilter(yellow);
-            senzor1lvl2.setColorFilter(orange);
+        if(senzor1 == 0){
             senzor1lvl3.setColorFilter(red);
         }
         else{
-            senzor1lvl1.setColorFilter(transparent);
-            senzor1lvl2.setColorFilter(transparent);
             senzor1lvl3.setColorFilter(transparent);
         }
 
         //senzor2
-        if(senzor2 > 1  && senzor2 < 2){
-            senzor2lvl1.setColorFilter(yellow);
-        }
-        else if(senzor2 <=1 && senzor2>=0.5){
-            senzor2lvl1.setColorFilter(yellow);
-            senzor2lvl2.setColorFilter(orange);
-        }
-        else if(senzor2 < 0.5 && senzor2 >0.1){
-            senzor2lvl1.setColorFilter(yellow);
-            senzor2lvl2.setColorFilter(orange);
+        if(senzor2 == 0 ){
             senzor2lvl3.setColorFilter(red);
         }
         else{
-            senzor2lvl1.setColorFilter(transparent);
-            senzor2lvl2.setColorFilter(transparent);
+
             senzor2lvl3.setColorFilter(transparent);
         }
 
         //senzor3
-        if(senzor3 > 1  && senzor3 < 2){
-            senzor3lvl1.setColorFilter(yellow);
-        }
-        else if(senzor3 <=1 && senzor3>=0.5){
-            senzor3lvl1.setColorFilter(yellow);
-            senzor3lvl2.setColorFilter(orange);
-        }
-        else if(senzor3 < 0.5 && senzor3 >0.1){
-            senzor3lvl1.setColorFilter(yellow);
-            senzor3lvl2.setColorFilter(orange);
+        if(senzor3 == 0){
             senzor3lvl3.setColorFilter(red);
         }
         else{
-            senzor3lvl1.setColorFilter(transparent);
-            senzor3lvl2.setColorFilter(transparent);
             senzor3lvl3.setColorFilter(transparent);
         }
 
         //senzor4
-        if(senzor4 > 1 && senzor4 < 2){
-            senzor4lvl1.setColorFilter(yellow);
-        }
-        else if(senzor4 <=1 && senzor4>=0.5){
-            senzor4lvl1.setColorFilter(yellow);
-            senzor4lvl2.setColorFilter(orange);
-        }
-        else if(senzor4 < 0.5 && senzor4 >0.1){
-            senzor4lvl1.setColorFilter(yellow);
-            senzor4lvl2.setColorFilter(orange);
+        if(senzor4 == 0){
             senzor4lvl3.setColorFilter(red);
         }
         else{
-            senzor4lvl1.setColorFilter(transparent);
-            senzor4lvl2.setColorFilter(transparent);
             senzor4lvl3.setColorFilter(transparent);
         }
     }
