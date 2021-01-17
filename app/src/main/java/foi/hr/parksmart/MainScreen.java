@@ -16,6 +16,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,11 @@ import com.example.irsensor.IrSensor;
 import com.example.ultrasoundsensor.UltraSoundSensor;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+
 import foi.hr.parksmart.BluetoothLowEnergy.BleDataListener;
 import foi.hr.parksmart.BluetoothLowEnergy.BleHandler;
 
@@ -36,29 +43,26 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private static final String usSensorPrefix = "SmartPark_Centar_Unit_US";
     private static final String irSensorPrefix = "SmartPark_Centar_Unit_IR";
 
+
     private static String sosNumber;
     private BluetoothDevice bleDevice;
     private BleHandler bleConnectionHandler;
     private Dialog dialogTurnedOFF, missingDevice;
     private IotSensor distanceSensor;
 
+
+    public static final int SOUND_1 = 1;
+    public static final int SOUND_2 = 2;
+    public static final int SOUND_3 = 3;
+
+    SoundPool mSoundPool;
+    HashMap<Integer, Integer> mSoundMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
-
-        /*
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).
-                    add(R.id.fragment_container_view, UltraSoundSensor.class, null).commit();
-        }*/
-
-        /*
-        //Stapicev nacin
-        FragmentTransaction fts = getSupportFragmentManager().beginTransaction();
-        fts.replace(R.id.fragment_container_view, new UltraSoundSensor());
-        fts.commit();*/
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
         // if(sosNumber=="")sosNumber="+385112";
@@ -83,7 +87,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
 
         if(savedInstanceState == null){
-
             if(bleDevice.getName().contains(usSensorPrefix))
                 distanceSensor = new UltraSoundSensor();
             else if (bleDevice.getName().contains(irSensorPrefix))
@@ -102,6 +105,16 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
             FragmentManager fragmentManager = getSupportFragmentManager();
             distanceSensor = (IotSensor) fragmentManager.getFragment(savedInstanceState, "fragmentDistance");
             Log.i("Actvty:", "Restore");
+        }
+
+
+        mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 100);
+        mSoundMap = new HashMap<Integer, Integer>();
+
+        if(mSoundPool != null){
+            mSoundMap.put(SOUND_1, mSoundPool.load(this, R.raw.short_sound, 1));
+            mSoundMap.put(SOUND_2, mSoundPool.load(this, R.raw.medium_sound, 1));
+            mSoundMap.put(SOUND_3, mSoundPool.load(this, R.raw.long_sound, 1));
         }
 
         bleConnectionHandler = new BleHandler(this);
@@ -160,6 +173,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         Log.i("SensorData", sensorData);
         //String[] arrayOfDataFromMcu = sensorData.split(",");
         distanceSensor.showGraphDistance(sensorData.split(","));
+        playAudio(sensorData.split(","));
     }
 
     /*
@@ -197,4 +211,105 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
             }
         });
     }*/
+
+    public void playSound(int sound) {
+        AudioManager mgr = (AudioManager)this.getSystemService(this.AUDIO_SERVICE);
+        float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float streamVolumeMax = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float volume = streamVolumeCurrent / streamVolumeMax;
+
+        if(mSoundPool != null){
+            mSoundPool.play(mSoundMap.get(sound), volume, volume, 1, 0, 1.0f);
+        }
+    }
+
+    public void stopSound(int sound) {
+        AudioManager mgr = (AudioManager)this.getSystemService(this.AUDIO_SERVICE);
+        float streamVolumeCurrent = mgr.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float streamVolumeMax = mgr.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float volume = streamVolumeCurrent / streamVolumeMax;
+
+        if(mSoundPool != null){
+            mSoundPool.stop(sound);
+            mSoundPool.release();
+        }
+    }
+
+
+    private void playAudio(String[] data){
+        float senzor1 = Float.parseFloat(data[0]);
+        float senzor2 = Float.parseFloat(data[1]);
+        float senzor3 = Float.parseFloat(data[2]);
+        float senzor4 = Float.parseFloat(data[3]);
+
+        List<Float> senzori = new ArrayList<Float>();
+        senzori.add(senzor1);
+        senzori.add(senzor2);
+        senzori.add(senzor3);
+        senzori.add(senzor4);
+        Collections.sort(senzori);
+
+        float min = senzori.get(0);
+
+        FloatingActionButton audioButton = findViewById(R.id.btnZvuk);
+        if(audioButton.getVisibility()==View.VISIBLE) {
+            //senzor 1
+            if(min == senzor1) {
+                if(senzor1 > 2)
+                    stopSound(SOUND_1);
+                if (senzor1 > 1 && senzor1 <= 2) {
+                    playSound(SOUND_1);
+                }
+                if (senzor1 <= 1 && senzor1 >= 0.5) {
+                    playSound(SOUND_2);
+                }
+                if (senzor1 < 0.5 && senzor1 > 0.1) {
+                    playSound(SOUND_3);
+                }
+            }
+            //senzor 2
+            else if(min == senzor2) {
+                if(senzor2 > 2)
+                    stopSound(SOUND_1);
+                if (senzor2 > 1 && senzor1 <= 2) {
+                    playSound(SOUND_1);
+                }
+                if (senzor2 <= 1 && senzor2 >= 0.5) {
+                    playSound(SOUND_2);
+                }
+                if (senzor2 < 0.5 && senzor2 > 0.1) {
+                    playSound(SOUND_3);
+                }
+            }
+            //senzor 3
+            else if(min == senzor3) {
+                if(senzor3 > 2)
+                    stopSound(SOUND_1);
+                if (senzor3 > 1 && senzor1 <= 2) {
+                    playSound(SOUND_1);
+                }
+                if (senzor3 <= 1 && senzor3 >= 0.5) {
+                    playSound(SOUND_2);
+                }
+                if (senzor3 < 0.5 && senzor3 > 0.1) {
+                    playSound(SOUND_3);
+                }
+            }
+            //senzor 4
+            else if(min == senzor4) {
+                if(senzor4 > 2)
+                    stopSound(SOUND_1);
+                if (senzor4 > 1 && senzor1 <= 2) {
+                    playSound(SOUND_1);
+                }
+                if (senzor4 <= 1 && senzor4 >= 0.5) {
+                    playSound(SOUND_2);
+                }
+                if (senzor4 < 0.5 && senzor4 > 0.1) {
+                    playSound(SOUND_3);
+                }
+            }
+
+        }
+    }
 }
