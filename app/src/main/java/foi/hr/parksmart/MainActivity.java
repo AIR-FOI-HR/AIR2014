@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
 
-
     public Dialog dialog;
     TextView printWarning;
     private BluetoothAdapter mBluetoothAdapter;
@@ -55,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     ArrayList<BluetoothDevice> bleDevices = new ArrayList<>();;
     BluetoothLeScanner bleScanner;
     SharedPreferences sharedPreferencesMod;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             }
         }
     }
-
 
     private boolean isLocationPermissionGranted()
     {
@@ -236,13 +235,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         // stavi povezivanje s uređajem
 
     }
-
-
         // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 
-        protected void GoToMainScreen(BluetoothDevice bleDevice) {
+    protected void GoToMainScreen(BluetoothDevice bleDevice) {
             Intent intent = new Intent(MainActivity.this, MainScreen.class);
-            // intent.putExtra("BLE_DEVICE", bleDevice);
+            intent.putExtra("BLE_DEVICE", bleDevice);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();

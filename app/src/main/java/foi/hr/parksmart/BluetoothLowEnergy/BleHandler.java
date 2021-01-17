@@ -1,5 +1,6 @@
 package foi.hr.parksmart.BluetoothLowEnergy;
 
+import android.app.Dialog;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCallback;
@@ -10,8 +11,12 @@ import android.bluetooth.BluetoothProfile;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.UUID;
+
+import foi.hr.parksmart.MainScreen;
+import foi.hr.parksmart.R;
 
 public class BleHandler {
     //BLE MTU size
@@ -24,6 +29,7 @@ public class BleHandler {
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
     public BleDataListener bleDataListener;
+
 
     public BleHandler (BleDataListener bleDataListener){
         this.bleDataListener = bleDataListener;
@@ -47,7 +53,9 @@ public class BleHandler {
                                na mobitelu) i tražiti od korisnika da upali Bluetooth i
                                pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
                                 nakon čega se ponovno poziva funkcija EstablishConnection()
-                            * */
+                            */
+
+                            //bleDataListener.showBluetoothConnectionButton();
                             gatt.close();
                         }
                     } else {

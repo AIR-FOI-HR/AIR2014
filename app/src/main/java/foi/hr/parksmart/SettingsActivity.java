@@ -51,7 +51,6 @@ public class SettingsActivity extends AppCompatActivity {
             editora.putBoolean("keyDarkMode", true);
             editora.commit();
         }
-
     }
 
     
