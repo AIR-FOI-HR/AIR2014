@@ -43,14 +43,12 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private static final String usSensorPrefix = "SmartPark_Centar_Unit_US";
     private static final String irSensorPrefix = "SmartPark_Centar_Unit_IR";
 
-
     private static String sosNumber;
     private BluetoothDevice bleDevice;
     private BleHandler bleConnectionHandler;
     private Dialog dialogTurnedOFF, missingDevice;
     private IotSensor distanceSensor;
-
-
+    
     public static final int SOUND_1 = 1;
     public static final int SOUND_2 = 2;
     public static final int SOUND_3 = 3;
@@ -176,12 +174,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         playAudio(sensorData.split(","));
     }
 
-    /*
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("Destroied", "Da");
-    }*/
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
@@ -189,28 +181,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         getSupportFragmentManager().putFragment(outState, "fragmentDistance", (Fragment) distanceSensor);
     }
 
-    /*
-    @Override
-    public void showBluetoothConnectionButton()
-    {
-        Log.i("ShowBluetoothConnection","Radi" );
-
-        dialogTurnedOFF = new Dialog(this);
-        dialogTurnedOFF.setContentView(R.layout.bluetooth_message_turned_off);
-        dialogTurnedOFF.setCanceledOnTouchOutside(false);
-
-        Button btnOn = (Button) dialogTurnedOFF.findViewById(R.id.btnTurnOn);
-        Context context = this.getApplicationContext();
-
-        btnOn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                final int REQUEST_ENABLE_BT = 1;
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-                bleConnectionHandler.EstablishConnection(bleDevice, context);
-            }
-        });
-    }*/
 
     public void playSound(int sound) {
         AudioManager mgr = (AudioManager)this.getSystemService(this.AUDIO_SERVICE);
@@ -263,7 +233,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
                 if (senzor1 <= 1 && senzor1 >= 0.5) {
                     playSound(SOUND_2);
                 }
-                if (senzor1 < 0.5 && senzor1 > 0.1) {
+                if (senzor1 < 0.5 ) {
                     playSound(SOUND_3);
                 }
             }
@@ -277,7 +247,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
                 if (senzor2 <= 1 && senzor2 >= 0.5) {
                     playSound(SOUND_2);
                 }
-                if (senzor2 < 0.5 && senzor2 > 0.1) {
+                if (senzor2 < 0.5 ) {
                     playSound(SOUND_3);
                 }
             }
@@ -291,7 +261,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
                 if (senzor3 <= 1 && senzor3 >= 0.5) {
                     playSound(SOUND_2);
                 }
-                if (senzor3 < 0.5 && senzor3 > 0.1) {
+                if (senzor3 < 0.5) {
                     playSound(SOUND_3);
                 }
             }
@@ -305,11 +275,10 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
                 if (senzor4 <= 1 && senzor4 >= 0.5) {
                     playSound(SOUND_2);
                 }
-                if (senzor4 < 0.5 && senzor4 > 0.1) {
+                if (senzor4 < 0.5) {
                     playSound(SOUND_3);
                 }
             }
-
         }
     }
 }

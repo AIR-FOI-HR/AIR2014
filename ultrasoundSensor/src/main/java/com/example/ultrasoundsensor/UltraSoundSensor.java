@@ -120,7 +120,7 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
         }
-        else if(senzor2 < 0.5 && senzor2 > 0.0){
+        else if(senzor2 < 0.5 && senzor2 >= 0.0){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
             senzor2lvl3.setColorFilter(red);
@@ -139,7 +139,7 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
         }
-        else if(senzor3 < 0.5 && senzor3 > 0.0){
+        else if(senzor3 < 0.5 && senzor3 >= 0.0){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
             senzor3lvl3.setColorFilter(red);
@@ -158,7 +158,7 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
         }
-        else if(senzor4 < 0.5 && senzor4 > 0.0){
+        else if(senzor4 < 0.5 && senzor4 >= 0.0){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
             senzor4lvl3.setColorFilter(red);
