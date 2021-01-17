@@ -53,21 +53,12 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         txtSenzor4 = view.findViewById(R.id.txtSenzor4);
         distanceSlider = view.findViewById(R.id.slider);
 
-        Log.i("Fragment: ", "inicijaliziran");
-
         return view;
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        Log.i("Fragment", "Destroied");
-    }
 
     @Override
     public void showGraphDistance(String[] data){
-
-        Log.i("showGraphDistance:", "Ulazim");
 
         float senzor1 = Float.parseFloat(data[0]);
         float senzor2 = Float.parseFloat(data[1]);
@@ -78,21 +69,6 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         int yellow = Color.parseColor("#f5f242");
         int red = Color.parseColor("#f70000");
         int transparent= Color.parseColor("#00000000");
-
-        Log.i("Slider", String.valueOf(distanceSlider.getValue()));
-
-        /*
-        float minSensDistance = distanceSlider.getValue();
-        if(senzor1 < minSensDistance)
-            senzor1 = (float) 0.11;
-        if(senzor2 < minSensDistance)
-            senzor2 = (float) 0.11;
-        if(senzor3 < minSensDistance)
-            senzor3 = (float) 0.11;
-        if(senzor4 < minSensDistance)
-            senzor4 = (float) 0.11;
-
-         */
 
         if(senzor1 > 1  && senzor1 < 2){
             senzor1lvl1.setColorFilter(yellow);

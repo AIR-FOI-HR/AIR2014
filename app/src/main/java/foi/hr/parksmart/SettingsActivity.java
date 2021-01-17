@@ -61,8 +61,7 @@ public class SettingsActivity extends AppCompatActivity {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
         }
     }
-
-
+    
     SharedPreferences prefs2;
     SharedPreferences.OnSharedPreferenceChangeListener onSharedPreferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
         @Override
@@ -73,12 +72,6 @@ public class SettingsActivity extends AppCompatActivity {
                 String regexObrazac = "^\\+385(1[0-9]{2,10}|(2[0-3]|3[1-5]|4(0|[2-4]|[7-9])|5[1-3]|" +
                         "6([0-1]|[4-5]|9)|7(2|[4-5]))[0-9]{6}|9([1-2]|5|[7-9])[0-9]{7})$";
                 if(!Pattern.matches(regexObrazac, numberForSosCheck)){
-                    //Ova tri reda ispod ako nesto ne valja. Ja cu doraditi taj alert s porukom i svime,
-                    // ti samo napravi da se provjerava
-
-                    //Ako je upisani broj u pogresnom formatu, vrijednost broja se postavlja na +385112.
-                    //Broj se uspješno postavlja u MainScreenu, ali u TextBoxu za unos sosBroja postavlja se
-                    //tek nakon što se izađe iz postavki i ponovno u njih uđe.
                     postaviZadanuVrijednostSosBroja();
 
                     AlertDialog.Builder settingsAlert= new AlertDialog.Builder(SettingsActivity.this);

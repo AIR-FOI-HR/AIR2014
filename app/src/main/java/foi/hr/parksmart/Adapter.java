@@ -61,7 +61,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            //Log.i("onClick", "radi");
             onBluetoothDeviceListener.onBluetoothDeviceClick(getAdapterPosition());
         }
     }

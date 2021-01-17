@@ -19,6 +19,7 @@ import foi.hr.parksmart.MainScreen;
 import foi.hr.parksmart.R;
 
 public class BleHandler {
+
     //BLE MTU size
     //payload size = MTU - 3
     private static final int GATT_MAX_MTU_SIZE = 46;
@@ -43,25 +44,15 @@ public class BleHandler {
                     super.onConnectionStateChange(gatt, status, newState);
                     if (status == BluetoothGatt.GATT_SUCCESS) {
                         if (newState == BluetoothProfile.STATE_CONNECTED) {
-                            Log.w("BluetoothGattCallback", "Successfully connected to $deviceAddress");
+                            //Log.w("BluetoothGattCallback", "Successfully connected to $deviceAddress");
                             Boolean stat = gatt.requestMtu(GATT_MAX_MTU_SIZE);
-                            Log.i("MTUstat", stat.toString());
+                            //Log.i("MTUstat", stat.toString());
                         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
-                            Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
-                            /*TODO treba prikazati poruku na zaslonu da je uređaj disconnectan (razlog je isključivanje Bluetootha
-                               na mobitelu) i tražiti od korisnika da upali Bluetooth i
-                               pritisne gumb "Spoji se" (napraviti dijaloški okvir koji prikazuje razlog i gumb)
-                                nakon čega se ponovno poziva funkcija EstablishConnection()
-                            */
-
-                            //bleDataListener.showBluetoothConnectionButton();
+                            //Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
                             gatt.close();
                         }
                     } else {
-                        Log.w("BluetoothGattCallback", "Error $status encountered for $deviceAddress! Disconnecting...");
-                        /* TODO ista stvar kao i prethodni TODO samo što razlog nije isključivanje Bluetootha nego
-                            isključivanje BLE servera (ESP32 mikrokontrolera) ili neka druga greška
-                         */
+                        //Log.w("BluetoothGattCallback", "Error $status encountered for $deviceAddress! Disconnecting...");
                         gatt.close();
                     }
                 }
@@ -70,16 +61,13 @@ public class BleHandler {
                 public void onServicesDiscovered(BluetoothGatt gatt, int status) {
                     super.onServicesDiscovered(gatt, status);
                     if(gatt != null){
-                        Log.w("BluetoothGattCallback", "Discovered ${services.size} services for ${device.address}");
-                        //printGattTable() // See implementation just above this section
+                        //Log.w("BluetoothGattCallback", "Discovered ${services.size} services for ${device.address}");
                         setNotifications(gatt);
                     }
                 }
                 @Override
                 public void onCharacteristicChanged(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic) {
                     super.onCharacteristicChanged(gatt, characteristic);
-                    //Log.i("CharValue", byteArrayToString(characteristic.getValue()));
-                    //Log.i("CharValue", hexToString(byteArrayToString(characteristic.getValue())));  //ovo radi
                     bleDataListener.loadData(hexToString(byteArrayToString(characteristic.getValue())));
                 }
                 @Override
@@ -87,11 +75,11 @@ public class BleHandler {
                     super.onMtuChanged(gatt, mtu, status);
                     String logStatus = mtu + " status = ";
                     if(status == BluetoothGatt.GATT_SUCCESS){
-                        Log.i("MTU changed: ", logStatus+"uspjesno");
+                        //Log.i("MTU changed: ", logStatus+"uspjesno");
                         gatt.discoverServices();
                     }
                     else{
-                        Log.i("MTU changed: ", logStatus+"neuspjeno");
+                        //Log.i("MTU changed: ", logStatus+"neuspjeno");
                     }
                 }
             };

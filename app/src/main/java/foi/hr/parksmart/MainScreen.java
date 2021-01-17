@@ -46,9 +46,8 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private static String sosNumber;
     private BluetoothDevice bleDevice;
     private BleHandler bleConnectionHandler;
-    private Dialog dialogTurnedOFF, missingDevice;
     private IotSensor distanceSensor;
-    
+
     public static final int SOUND_1 = 1;
     public static final int SOUND_2 = 2;
     public static final int SOUND_3 = 3;
@@ -63,10 +62,10 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         setContentView(R.layout.activity_main_screen);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(MainScreen.this);
-        // if(sosNumber=="")sosNumber="+385112";
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
         FloatingActionButton sosGumb = findViewById(R.id.btnSos);
 
+        //popup za call dozvolu
         sosGumb.setOnClickListener((View v) -> {
             if (ContextCompat.checkSelfPermission(MainScreen.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(MainScreen.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
@@ -84,28 +83,22 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
 
         bleDevice = getIntent().getParcelableExtra("BLE_DEVICE");
 
+        //instanciranje modula i prikaz njegovog viewa unutar fragment containera
         if(savedInstanceState == null){
             if(bleDevice.getName().contains(usSensorPrefix))
                 distanceSensor = new UltraSoundSensor();
             else if (bleDevice.getName().contains(irSensorPrefix))
                 distanceSensor = new IrSensor();
 
-            //distanceSensor = new IrSensor();
-            //Fragment frag = new UltraSoundSensor(this);
             FragmentManager fragmentManager = getSupportFragmentManager();
-            //fragmentManager.beginTransaction().replace(R.id.fragment_container_view, frag).commit();
             fragmentManager.beginTransaction().add(R.id.fragment_container_view, (Fragment) distanceSensor).commit();
-            //modulFragmentView = frag.getView();
-
-            Log.i("Actvty:", "Create");
         }
         else{
             FragmentManager fragmentManager = getSupportFragmentManager();
             distanceSensor = (IotSensor) fragmentManager.getFragment(savedInstanceState, "fragmentDistance");
-            Log.i("Actvty:", "Restore");
         }
 
-
+        //sound setup
         mSoundPool = new SoundPool(3, AudioManager.STREAM_MUSIC, 100);
         mSoundMap = new HashMap<Integer, Integer>();
 
@@ -115,10 +108,10 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
             mSoundMap.put(SOUND_3, mSoundPool.load(this, R.raw.long_sound, 1));
         }
 
+        //pokretanje ble komunikacije
         bleConnectionHandler = new BleHandler(this);
         bleConnectionHandler.EstablishConnection(bleDevice, this);
     }
-    //Preference.OnPreferenceChangeListener()
 
     @Override
     protected void onResume()
@@ -130,8 +123,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         if(toShowOrNotToShow) sosButton.setVisibility(View.VISIBLE);
         else sosButton.setVisibility(View.GONE);
         sosNumber=sharedPreferences.getString("keySosNumbera","112");
-
-        Log.i("Resume: ", "ulazim");
     }
 
     public void hideButton(View view)
@@ -168,8 +159,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     @Override
     public void loadData(String sensorData)
     {
-        Log.i("SensorData", sensorData);
-        //String[] arrayOfDataFromMcu = sensorData.split(",");
+        //Log.i("SensorData", sensorData);
         distanceSensor.showGraphDistance(sensorData.split(","));
         playAudio(sensorData.split(","));
     }

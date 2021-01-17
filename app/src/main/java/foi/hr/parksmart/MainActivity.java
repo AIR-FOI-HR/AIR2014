@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
-    //private static final UUID ESP32_SERVICE_UUID = UUID.fromString("4fafc201-1fb5-459e-8fcc-c5c9c331914b");
 
     public Dialog dialog;
     TextView printWarning;
@@ -156,9 +155,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
 
             if (bleScanner != null) {
                 bleScanner.startScan(null, scanSettings, scanCallback);
-                Log.d("ScanInfo", "scan started");
+                //Log.d("ScanInfo", "scan started");
             }  else {
-                Log.e("ScanInfo", "could not get scanner object");
+                //Log.e("ScanInfo", "could not get scanner object");
             }
         }
     }
@@ -177,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             super.onScanResult(callbackType, result);
 
             if(result.getDevice().getName().contains("SmartPark_Centar_Unit")){
-                Log.i("ScanCallback", result.getDevice().getName());
+                //Log.i("ScanCallback", result.getDevice().getName());
                 if(!bleDevices.contains(result.getDevice()))
                     bleDevices.add(result.getDevice());
             }
@@ -228,11 +227,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     public void onBluetoothDeviceClick(int position) {
         //Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
         GoToMainScreen(bleDevices.get(position));
-
-        // stavi povezivanje s uređajem
     }
-        // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
 
+    // GoToMainScreen() poziva klasu Intent te se objekt salje u startActivity(intent) te omogućuje otvaranja novog zaslona
     protected void GoToMainScreen(BluetoothDevice bleDevice) {
             Intent intent = new Intent(MainActivity.this, MainScreen.class);
             intent.putExtra("BLE_DEVICE", bleDevice);
