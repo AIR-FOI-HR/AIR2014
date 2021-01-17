@@ -1,2 +1,5 @@
+include ':irSensor'
+include ':ultrasoundSensor'
+include ':core'
 include ':app'
 rootProject.name = "ParkSmart"

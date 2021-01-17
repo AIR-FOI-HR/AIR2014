@@ -1,0 +1,5 @@
+<resources>
+    <string name="distance1"><![CDATA[Prikaz u cm <50]]></string>
+    <string name="distance2"><![CDATA[50>= i =<100]]></string>
+    <string name="distance3"><![CDATA[100> i <160]]></string>
+</resources>

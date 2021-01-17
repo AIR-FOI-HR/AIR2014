@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/viewIR"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="-47dp"
+        tools:layout_editor_absoluteY="-153dp">
+
+
+        <ImageView
+            android:id="@+id/idSenzor1Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="122dp"
+            android:layout_marginRight="209dp"
+            android:layout_marginBottom="141dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/senzor1lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor2Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="149dp"
+            android:layout_marginRight="182dp"
+            android:layout_marginBottom="141dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/senzor2lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor3Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="148dp"
+            android:layout_marginRight="183dp"
+            android:layout_marginBottom="141dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/senzor3lvl3" />
+
+        <ImageView
+            android:id="@+id/idSenzor4Lvl3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="178dp"
+            android:layout_marginRight="153dp"
+            android:layout_marginBottom="141dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/senzor4lvl3" />
+
+
+
+</RelativeLayout>
+
+</LinearLayout>
