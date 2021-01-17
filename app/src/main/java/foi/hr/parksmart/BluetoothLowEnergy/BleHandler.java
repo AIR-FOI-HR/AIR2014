@@ -30,7 +30,6 @@ public class BleHandler {
 
     public BleDataListener bleDataListener;
 
-
     public BleHandler (BleDataListener bleDataListener){
         this.bleDataListener = bleDataListener;
     }

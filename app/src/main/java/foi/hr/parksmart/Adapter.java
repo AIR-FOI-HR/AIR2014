@@ -16,18 +16,13 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private LayoutInflater layoutInflater;
-    private List<String> deviceName = new ArrayList<>();
-    private List<String> deviceAddress = new ArrayList<>();
+
+    private List<BluetoothDevice> bluetoothLeDevice = new ArrayList<>();
     private OnBluetoothDeviceListener mOnBluetoothDeviceListener;
 
     public Adapter(Context context, List<BluetoothDevice> bleDevices, OnBluetoothDeviceListener onBluetoothDeviceListener) {
         this.layoutInflater = LayoutInflater.from(context);
-        for (BluetoothDevice bleDevice : bleDevices)
-        {
-            deviceName.add(bleDevice.getName());
-            deviceAddress.add(bleDevice.getAddress());
-        }
-
+        this.bluetoothLeDevice = bleDevices;
         this.mOnBluetoothDeviceListener=onBluetoothDeviceListener;
     }
 
@@ -41,15 +36,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        String name = deviceName.get(position);
+        String name = bluetoothLeDevice.get(position).getName();
         holder.txtDeviceName.setText(name);
-        String address = deviceAddress.get(position);
+        String address = bluetoothLeDevice.get(position).getAddress();
         holder.txtDeviceAddress.setText(address);
     }
 
     @Override
     public int getItemCount() {
-        return deviceName.size();
+        return bluetoothLeDevice.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
