@@ -84,6 +84,7 @@ public class BleHandler {
                 }
             };
             BluetoothGatt gatt = bleDevice.connectGatt(msContext, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
+            bleDataListener.getBleGattObject(gatt);
         }
     }
 

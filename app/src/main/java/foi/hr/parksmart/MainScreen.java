@@ -10,6 +10,8 @@ import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothProfile;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -31,6 +33,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private static final int REQUEST_PHONE_CALL = 1;
     private static final String usSensorPrefix = "SmartPark_Centar_Unit_US";
     private static final String irSensorPrefix = "SmartPark_Centar_Unit_IR";
+    BluetoothGatt gatt;
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
@@ -84,8 +87,10 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         }
 
         //pokretanje ble komunikacije
-        bleConnectionHandler = new BleHandler(this);
-        bleConnectionHandler.EstablishConnection(bleDevice, this);
+        if(gatt == null) {
+            bleConnectionHandler = new BleHandler(this);
+            bleConnectionHandler.EstablishConnection(bleDevice, this);
+        }
     }
 
     @Override
@@ -110,6 +115,16 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         {
             playSound = true;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if(gatt != null)
+            gatt.disconnect();
+
+        finish();
     }
 
     public void hideButton(View view)
@@ -158,6 +173,11 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         {
             distanceSensor.playAudio(sensorDataArray);
         }
+    }
+
+    @Override
+    public void getBleGattObject(BluetoothGatt gatt) {
+        this.gatt = gatt;
     }
 
     @Override
