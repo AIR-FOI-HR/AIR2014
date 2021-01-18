@@ -3,4 +3,5 @@ import android.view.View;
 
 public interface IotSensor {
    void showGraphDistance(String[] data);
+   void playAudio(String[] data);
 }
