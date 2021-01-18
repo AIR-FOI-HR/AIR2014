@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         sharedPreferencesMod = getSharedPreferences("idDarkMode",0);
         Boolean booleanMod = sharedPreferencesMod.getBoolean("keyDarkMode",false);
@@ -72,10 +73,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         dialog.setContentView(R.layout.bluetooth_message);
         dialog.setCanceledOnTouchOutside(false);
 
+        showRecyclerView();
+
         final BluetoothManager btManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = btManager.getAdapter();
     }
-
 
     private void showRecyclerView() {
         recyclerView = findViewById(R.id.recyclerView);
@@ -94,16 +96,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         if (bleDevices.isEmpty());{
             startBleScan();
         }
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                stopBleScan();
-
-                if(bleDevices.size() != 0)
-                    showRecyclerView();
-            }
-        }, 10000);
     }
 
     private void promptEnableBluetooth() {
@@ -179,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
                 //Log.i("ScanCallback", result.getDevice().getName());
                 if(!bleDevices.contains(result.getDevice()))
                     bleDevices.add(result.getDevice());
+                    adapter.notifyItemChanged(bleDevices.size() - 1);
             }
         }
     };
@@ -226,6 +219,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     @Override
     public void onBluetoothDeviceClick(int position) {
         //Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
+        stopBleScan();
         GoToMainScreen(bleDevices.get(position));
     }
 
