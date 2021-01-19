@@ -33,7 +33,6 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     private static final int REQUEST_PHONE_CALL = 1;
     private static final String usSensorPrefix = "SmartPark_Centar_Unit_US";
     private static final String irSensorPrefix = "SmartPark_Centar_Unit_IR";
-    BluetoothGatt gatt;
 
     private static String sosNumber;
     private BluetoothDevice bleDevice;
@@ -87,14 +86,15 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         }
 
         //pokretanje ble komunikacije
-        if(gatt == null) {
-            bleConnectionHandler = new BleHandler(this);
-            bleConnectionHandler.EstablishConnection(bleDevice, this);
+        if(bleConnectionHandler == null){
+            bleConnectionHandler = new BleHandler();
+            bleConnectionHandler.EstablishConnection(bleDevice, this, this);
         }
     }
 
     @Override
-    protected void onPause() {
+    protected void onPause()
+    {
         super.onPause();
         playSound = false;
     }
@@ -118,13 +118,12 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     }
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed()
+    {
         super.onBackPressed();
 
-        if(gatt != null)
-            gatt.disconnect();
-
-        finish();
+        if(bleConnectionHandler != null)
+            bleConnectionHandler.Disconnect();
     }
 
     public void hideButton(View view)
@@ -165,7 +164,7 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
     @Override
     public void loadData(String sensorData)
     {
-        Log.i("SensorData", sensorData);
+        //Log.i("SensorData", sensorData);
         String[] sensorDataArray = sensorData.split(",");
 
         distanceSensor.showGraphDistance(sensorDataArray);
@@ -175,9 +174,14 @@ public class MainScreen extends AppCompatActivity implements BleDataListener {
         }
     }
 
+
     @Override
-    public void getBleGattObject(BluetoothGatt gatt) {
-        this.gatt = gatt;
+    public void startBleScanActivity()
+    {
+        Intent intent = new Intent(MainScreen.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
     }
 
     @Override

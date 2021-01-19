@@ -30,14 +30,14 @@ public class BleHandler {
     private UUID ESP32_CHAR_DESRIPTOR_UUID = convertFromInteger(0x2902);
 
     public BleDataListener bleDataListener;
-
-    public BleHandler (BleDataListener bleDataListener){
-        this.bleDataListener = bleDataListener;
-    }
+    public BluetoothGatt gatt;
 
     //Bluetooth connection
-    public void EstablishConnection(BluetoothDevice bleDevice, Context msContext) {
-        if(bleDevice != null){
+    public void EstablishConnection(BluetoothDevice bleDevice, Context msContext, BleDataListener bleDataListener)
+    {
+        this.bleDataListener = bleDataListener;
+
+        if(bleDevice != null && gatt == null){
             BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
                 @Override
                 public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
@@ -50,10 +50,12 @@ public class BleHandler {
                         } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                             //Log.w("BluetoothGattCallback", "Successfully disconnected from $deviceAddress");
                             gatt.close();
+                            bleDataListener.startBleScanActivity();
                         }
                     } else {
                         //Log.w("BluetoothGattCallback", "Error $status encountered for $deviceAddress! Disconnecting...");
                         gatt.close();
+                        bleDataListener.startBleScanActivity();
                     }
                 }
 
@@ -83,9 +85,13 @@ public class BleHandler {
                     }
                 }
             };
-            BluetoothGatt gatt = bleDevice.connectGatt(msContext, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
-            bleDataListener.getBleGattObject(gatt);
+            gatt = bleDevice.connectGatt(msContext, false, gattCallback, BluetoothDevice.TRANSPORT_LE);
         }
+    }
+
+    public void Disconnect(){
+        if(gatt != null)
+            gatt.disconnect();
     }
 
     public UUID convertFromInteger(int i) {

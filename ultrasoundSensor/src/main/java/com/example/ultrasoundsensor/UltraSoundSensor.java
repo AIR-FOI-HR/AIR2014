@@ -96,7 +96,6 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         }
     }
 
-
     @Override
     public void showGraphDistance(String[] data)
     {

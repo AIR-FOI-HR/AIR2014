@@ -36,19 +36,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import foi.hr.parksmart.BluetoothLowEnergy.BleScanner;
+import foi.hr.parksmart.BluetoothLowEnergy.BleScannerListener;
+
 @RequiresApi(api = Build.VERSION_CODES.N)
-public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener{
+public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoothDeviceListener, BleScannerListener {
 
     private static final int ENABLE_BLUETOOTH_REQUEST_CODE = 1;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 2;
 
     public Dialog dialog;
-    TextView printWarning;
     private BluetoothAdapter mBluetoothAdapter;
     RecyclerView recyclerView;
     Adapter adapter;
     ArrayList<BluetoothDevice> bleDevices = new ArrayList<>();;
-    BluetoothLeScanner bleScanner;
     SharedPreferences sharedPreferencesMod;
     
     @Override
@@ -64,8 +65,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        TextView greetings = (TextView) findViewById(R.id.textView);
-        greetings.setText("Dobro došli!");
         ImageView myImageView = (ImageView) findViewById(R.id.imageView);
         myImageView.setImageResource(R.drawable.logo);
 
@@ -94,8 +93,15 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         }
 
         if (bleDevices.isEmpty());{
-            startBleScan();
+            BleScanner.startBleScan(this, mBluetoothAdapter);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        finish();
     }
 
     private void promptEnableBluetooth() {
@@ -116,7 +122,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         }
     }
 
-    private boolean isLocationPermissionGranted()
+    @Override
+    public boolean isLocationPermissionGranted()
     {
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED){
@@ -127,56 +134,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         }
     }
 
-    private void startBleScan()
-    {
-        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) && !isLocationPermissionGranted()){
-            requestLocationPermission();
-        }
-        else {
-            bleScanner = mBluetoothAdapter.getBluetoothLeScanner();
-
-            List<ScanFilter> scanFilters = new ArrayList<>();
-            ScanFilter scanFilter = new ScanFilter.Builder()
-                    .setDeviceName("SmartPark_Centar_Unit")
-                    .build();
-            scanFilters.add(scanFilter);
-
-            ScanSettings scanSettings = new ScanSettings.Builder()
-                    .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                    .build();
-
-            if (bleScanner != null) {
-                bleScanner.startScan(null, scanSettings, scanCallback);
-                //Log.d("ScanInfo", "scan started");
-            }  else {
-                //Log.e("ScanInfo", "could not get scanner object");
-            }
-        }
-    }
-
-    private void stopBleScan() {
-
-        if(bleScanner != null){
-            bleScanner.stopScan(scanCallback);
-        }
-    }
-
-    private final ScanCallback scanCallback = new ScanCallback() {
-
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            super.onScanResult(callbackType, result);
-
-            if(result.getDevice().getName().contains("SmartPark_Centar_Unit")){
-                //Log.i("ScanCallback", result.getDevice().getName());
-                if(!bleDevices.contains(result.getDevice()))
-                    bleDevices.add(result.getDevice());
-                    adapter.notifyItemChanged(bleDevices.size() - 1);
-            }
-        }
-    };
-
-    private void requestLocationPermission(){
+    @Override
+    public void requestLocationPermission(){
         if(isLocationPermissionGranted()){
             return;
         }
@@ -193,6 +152,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
                 .show();
     }
 
+    @Override
+    public void receiveScannedDevice(BluetoothDevice bluetoothDevice) {
+        if(!bleDevices.contains(bluetoothDevice)){
+            bleDevices.add(bluetoothDevice);
+            adapter.notifyItemChanged(bleDevices.size() - 1);
+        }
+    }
+
     //sluzi kao looper za konstantni prikaz popupa za ukljucivanje lokacije,
     //sve dok ju korisnik ne ukljuci
     @Override
@@ -200,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == LOCATION_PERMISSION_REQUEST_CODE){
             if (hasAllPermissionsGranted(grantResults)) {
-                startBleScan();
+                BleScanner.startBleScan(this, mBluetoothAdapter);
             } else {
                 requestLocationPermission();
             }
@@ -219,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
     @Override
     public void onBluetoothDeviceClick(int position) {
         //Log.i("BluetoothDeviceClick", bleDevices.get(position).getName());
-        stopBleScan();
+        BleScanner.stopBleScan();
         GoToMainScreen(bleDevices.get(position));
     }
 
