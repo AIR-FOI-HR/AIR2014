@@ -34,7 +34,7 @@ void setup() {
   Serial.begin(115200);
 
   //Kreiranje BLE Devicea unoson imena BT uređaja
-  BLEDevice::init("SmartPark_Centar_Unit");
+  BLEDevice::init("SmartPark_Centar_Unit_IR");
 
   //Postavljanje veličine MTU-a
   
