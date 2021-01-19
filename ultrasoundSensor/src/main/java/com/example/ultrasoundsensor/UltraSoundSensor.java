@@ -109,14 +109,28 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         int red = Color.parseColor("#f70000");
         int transparent= Color.parseColor("#00000000");
 
+        float sensitivity = distanceSlider.getValue();
+
+        if(senzor1 < sensitivity)
+            senzor1 = 0;
+        if(senzor2 < sensitivity)
+            senzor2 = 0;
+        if(senzor3 < sensitivity)
+            senzor3 = 0;
+        if(senzor4 < sensitivity)
+            senzor4 = 0;
+
         if(senzor1 > 1  && senzor1 < 2){
             senzor1lvl1.setColorFilter(yellow);
+            senzor1lvl2.setColorFilter(transparent);
+            senzor1lvl3.setColorFilter(transparent);
         }
-        else if (senzor1 <= 1 && senzor1 >= 0.5){
+        else if (senzor1 <= 1 && senzor1 > 0.5){
             senzor1lvl1.setColorFilter(yellow); //yellow
             senzor1lvl2.setColorFilter(orange); //orange
+            senzor1lvl3.setColorFilter(transparent);
         }
-        else if(senzor1 < 0.5 && senzor1 >= 0.0 ){
+        else if(senzor1 <= 0.5 && senzor1 >= 0.0 ){
             senzor1lvl1.setColorFilter(yellow);
             senzor1lvl2.setColorFilter(orange);
             senzor1lvl3.setColorFilter(red);
@@ -130,12 +144,15 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         //senzor2
         if(senzor2 > 1  && senzor2 < 2){
             senzor2lvl1.setColorFilter(yellow);
+            senzor2lvl2.setColorFilter(transparent);
+            senzor2lvl3.setColorFilter(transparent);
         }
-        else if(senzor2 <= 1 && senzor2 >= 0.5){
+        else if(senzor2 <= 1 && senzor2 > 0.5){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
+            senzor2lvl3.setColorFilter(transparent);
         }
-        else if(senzor2 < 0.5 && senzor2 >= 0.0){
+        else if(senzor2 <= 0.5 && senzor2 >= 0.0){
             senzor2lvl1.setColorFilter(yellow);
             senzor2lvl2.setColorFilter(orange);
             senzor2lvl3.setColorFilter(red);
@@ -149,12 +166,15 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         //senzor3
         if(senzor3 > 1  && senzor3 < 2){
             senzor3lvl1.setColorFilter(yellow);
+            senzor3lvl2.setColorFilter(transparent);
+            senzor3lvl3.setColorFilter(transparent);
         }
-        else if(senzor3 <= 1 && senzor3 >= 0.5){
+        else if(senzor3 <= 1 && senzor3 > 0.5){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
+            senzor3lvl3.setColorFilter(transparent);
         }
-        else if(senzor3 < 0.5 && senzor3 >= 0.0){
+        else if(senzor3 <= 0.5 && senzor3 >= 0.0){
             senzor3lvl1.setColorFilter(yellow);
             senzor3lvl2.setColorFilter(orange);
             senzor3lvl3.setColorFilter(red);
@@ -168,12 +188,15 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         //senzor4
         if(senzor4 > 1 && senzor4 < 2){
             senzor4lvl1.setColorFilter(yellow);
+            senzor4lvl2.setColorFilter(transparent);
+            senzor4lvl3.setColorFilter(transparent);
         }
-        else if(senzor4 <= 1 && senzor4 >= 0.5){
+        else if(senzor4 <= 1 && senzor4 > 0.5){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
+            senzor4lvl3.setColorFilter(transparent);
         }
-        else if(senzor4 < 0.5 && senzor4 >= 0.0){
+        else if(senzor4 <= 0.5 && senzor4 >= 0.0){
             senzor4lvl1.setColorFilter(yellow);
             senzor4lvl2.setColorFilter(orange);
             senzor4lvl3.setColorFilter(red);
@@ -210,6 +233,17 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
         float senzor3 = Float.parseFloat(data[2]);
         float senzor4 = Float.parseFloat(data[3]);
 
+        float sensitivity = distanceSlider.getValue();
+
+        if(senzor1 < sensitivity)
+            senzor1 = 0;
+        if(senzor2 < sensitivity)
+            senzor2 = 0;
+        if(senzor3 < sensitivity)
+            senzor3 = 0;
+        if(senzor4 < sensitivity)
+            senzor4 = 0;
+
         List<Float> senzori = new ArrayList<Float>();
         senzori.add(senzor1);
         senzori.add(senzor2);
@@ -221,60 +255,95 @@ public class UltraSoundSensor extends Fragment implements IotSensor {
 
         //senzor 1
         if(min == senzor1) {
-            if(senzor1 > 2)
+            if(senzor1 > 2) {
                 stopSound(SOUND_1);
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
+            }
             else if (senzor1 > 1 && senzor1 <= 2) {
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
                 playSound(SOUND_1);
             }
-            else if (senzor1 <= 1 && senzor1 >= 0.5) {
+            else if (senzor1 <= 1 && senzor1 > 0.5) {
+                stopSound(SOUND_1);
+                stopSound(SOUND_3);
                 playSound(SOUND_2);
             }
             else {
+                stopSound(SOUND_1);
+                stopSound(SOUND_2);
                 playSound(SOUND_3);
             }
         }
         //senzor 2
         else if(min == senzor2) {
-            if(senzor2 > 2)
+            if(senzor2 > 2){
                 stopSound(SOUND_1);
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
+            }
             else if (senzor2 > 1 && senzor1 <= 2) {
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
                 playSound(SOUND_1);
             }
-            else if (senzor2 <= 1 && senzor2 >= 0.5) {
+            else if (senzor2 <= 1 && senzor2 > 0.5) {
+                stopSound(SOUND_1);
+                stopSound(SOUND_3);
                 playSound(SOUND_2);
             }
             else {
+                stopSound(SOUND_1);
+                stopSound(SOUND_2);
                 playSound(SOUND_3);
             }
         }
         //senzor 3
         else if(min == senzor3) {
-            if(senzor3 > 2)
+            if(senzor3 > 2){
                 stopSound(SOUND_1);
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
+            }
             else if (senzor3 > 1 && senzor1 <= 2) {
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
                 playSound(SOUND_1);
             }
-            else if (senzor3 <= 1 && senzor3 >= 0.5) {
+            else if (senzor3 <= 1 && senzor3 > 0.5) {
+                stopSound(SOUND_1);
+                stopSound(SOUND_3);
                 playSound(SOUND_2);
             }
             else {
+                stopSound(SOUND_1);
+                stopSound(SOUND_2);
                 playSound(SOUND_3);
             }
         }
         //senzor 4
         else if(min == senzor4) {
-            if (senzor4 > 2)
+            if (senzor4 > 2){
                 stopSound(SOUND_1);
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
+            }
             else if (senzor4 > 1 && senzor1 <= 2) {
+                stopSound(SOUND_2);
+                stopSound(SOUND_3);
                 playSound(SOUND_1);
             }
-            else if (senzor4 <= 1 && senzor4 >= 0.5) {
+            else if (senzor4 <= 1 && senzor4 > 0.5) {
+                stopSound(SOUND_1);
+                stopSound(SOUND_3);
                 playSound(SOUND_2);
             }
             else {
+                stopSound(SOUND_1);
+                stopSound(SOUND_2);
                 playSound(SOUND_3);
             }
         }
-
     }
 }
