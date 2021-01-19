@@ -8,17 +8,16 @@
         android:id="@+id/idSosOnOff"
         android:defaultValue="true"
         android:key="keySosOnOff"
-        android:title="SOS (sakri/prikaži)" />
+        android:title="@string/SOSonoff" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"
         android:key="keySosNumbera"
-        android:title="SOS broj" />
-
+        android:title="@string/SOSnumber" />
     <SwitchPreference
         android:id="@+id/idDarkMode"
         android:defaultValue="false"
         android:key="keyDarkMode"
-        android:title="Tamni način rada" />
+        android:title="@string/Darkmode" />
 
 </PreferenceScreen>

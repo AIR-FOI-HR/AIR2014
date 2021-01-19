@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkSmart</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="settings_header">Settings</string>
+    <string name="sosSettings">SOS Settings</string>
+    <string name="soundSettings">Sound Settings</string>
+    <string name="lbl_device_name">Device name</string>
+    <string name="txt_device_name">Device name</string>
+    <string name="lbl_mac_address">MAC address</string>
+    <string name="txt_mac_address">MAC address</string>
+    <string name="blth_message">Turn on</string>
+    <string name="blth_message_dva" >Bluetooth is off, to continue please turn it on by clicking \"Turn on\" button!</string>
+    <string name="blth_message_tri">The device is out of range! Move closer to your vehicle.</string>
+    <string name="SOSonoff">SOS (Show/Hide)</string>
+    <string name="SOSnumber">SOS number</string>
+    <string name="Darkmode">Dark mode</string>
+</resources>

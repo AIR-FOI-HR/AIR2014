@@ -1,0 +1,10 @@
+Svi ovi values folderi idu u src - main - res
+
+Potrebno spojiti: ovo su koraci, zapravo je prejednostavno
+root_preferences.xml - idSosOnOff - title (gore u atributima) - SOSonoff
+root_preferences.xml - idSosNumbera- title (gore u atributima) - SOSNumber
+root_preferences.xml - idDarkMode - title (gore u atributima) - Darkmode
+
+bluetooth_message_turned_off.xml - btnTurnOn- title (gore u atributima) - blth_message
+bluetooth_message_turned_off.xml - txtWarning - title (gore u atributima) - blth_message_dva
+bluetooth_message_missing_device.xml - txtWarning - title (gore u atributima) - blth_message_tri

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkSmart</string>
+    <string name="title_activity_settings">Postavke</string>
+    <string name="settings_header">Postavke</string>
+    <string name="sosSettings">SOS postavke</string>
+    <string name="soundSettings">Postavke zvuka</string>
+    <string name="lbl_device_name">Ime uređaja</string>
+    <string name="txt_device_name">Ime uređaja</string>
+    <string name="lbl_mac_address">MAC adresa</string>
+    <string name="txt_mac_address">MAC adresa</string>
+    <string name="blth_message">Uključi</string>
+    <string name="blth_message_dva" >"Bluetooth je isključen, za nastavak ga uključite klikom na dugme \"Uključi\"! "</string>
+    <string name="blth_message_tri">Uređaj je van dometa! Približite se svom vozilu.</string>
+    <string name="SOSonoff">SOS (Prikaži / Sakrij)</string>
+    <string name="SOSnumber">SOS broj</string>
+    <string name="Darkmode">Tamni režim</string>
+</resources>

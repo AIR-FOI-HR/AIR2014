@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ParkSmart</string>
+    <string name="lbl_mac_address">"Dirección MAC "</string>
+    <string name="txt_mac_address">"Dirección MAC "</string>
+    <string name="lbl_device_name">"Nombre del dispositivo "</string>
+    <string name="txt_device_name">"Nombre del dispositivo "</string>
+    <string name="sosSettings">"Configuración de SOS "</string>
+    <string name="soundSettings">"Ajustes de sonido "</string>
+    <string name="settings_header">Configuraciones</string>
+    <string name="title_activity_settings">Configuraciones</string>
+    <string name="blth_message">Encender</string>
+    <string name="blth_message_dva" >"Bluetooth está desactivado, para continuar, enciéndalo haciendo clic en el botón \"Activar\". "</string>
+    <string name="blth_message_tri">"¡El dispositivo está fuera de alcance! Acérquese a su vehículo. "</string>
+    <string name="SOSonoff">SOS (Mostrar / Ocultar)</string>
+    <string name="SOSnumber">"Número SOS "</string>
+    <string name="Darkmode">"Modo oscuro "</string>
+</resources>
