@@ -35,7 +35,7 @@ void setup() {
   pinMode(sensorSignal, INPUT);
 
   //Kreiranje BLE Devicea unoson imena BT uređaja
-  BLEDevice::init("SmartPark_Centar_Unit"); \
+  BLEDevice::init("SmartPark_Centar_Unit_US"); \
   BLEDevice::setMTU(100);
 
   //Kreiranje BLE Server objekta
