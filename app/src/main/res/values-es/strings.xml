@@ -15,4 +15,7 @@
     <string name="SOSonoff">SOS (Mostrar / Ocultar)</string>
     <string name="SOSnumber">"Número SOS "</string>
     <string name="Darkmode">"Modo oscuro "</string>
+    <string name="DialogTitle">"Se requiere la ubicación para el escaneo BLE "</string>
+    <string name="DialogMessage">"Permita el acceso a la ubicación "</string>
+    <string name="okay">OK</string>
 </resources>

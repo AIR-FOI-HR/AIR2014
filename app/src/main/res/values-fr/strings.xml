@@ -15,4 +15,7 @@
     <string name="SOSonoff">"SOS (Afficher / Masquer) "</string>
     <string name="SOSnumber">"Numéro SOS "</string>
     <string name="Darkmode">"Mode sombre "</string>
+    <string name="DialogTitle">"L'emplacement est requis pour la numérisation BLE "</string>
+    <string name="DialogMessage">"Veuillez autoriser l'accès à l'emplacement "</string>
+    <string name="okay">OK</string>
 </resources>

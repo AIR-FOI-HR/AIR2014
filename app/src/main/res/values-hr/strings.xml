@@ -15,4 +15,7 @@
     <string name="SOSonoff">"SOS (Prikaži / sakrij) "</string>
     <string name="SOSnumber">SOS broj</string>
     <string name="Darkmode">Tamni način</string>
+    <string name="DialogTitle">Lokacija je obvezna za BLE skeniranje</string>
+    <string name="DialogMessage">Molimo dozvolite pristup lokaciji</string>
+    <string name="okay">U redu</string>
 </resources>

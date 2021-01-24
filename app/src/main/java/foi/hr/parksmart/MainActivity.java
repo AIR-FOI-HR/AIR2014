@@ -1,5 +1,21 @@
 package foi.hr.parksmart;
 
+import android.Manifest;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.ImageView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,32 +25,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanFilter;
-import android.bluetooth.le.ScanResult;
-import android.bluetooth.le.ScanSettings;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import foi.hr.parksmart.BluetoothLowEnergy.BleScanner;
 import foi.hr.parksmart.BluetoothLowEnergy.BleScannerListener;
@@ -140,9 +131,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.OnBluetoo
             return;
         }
         new AlertDialog.Builder(MainActivity.this)
-                .setTitle("Lokacija je obavezna za BLE skeniranje.")
-                .setMessage("Molimo dozvolite pristup lokaciji.")
-                .setPositiveButton("U redu", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.DialogTitle)
+                .setMessage(R.string.DialogMessage)
+                .setPositiveButton(R.string.okay, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         ActivityCompat.requestPermissions(MainActivity.this,
                                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_PERMISSION_REQUEST_CODE);

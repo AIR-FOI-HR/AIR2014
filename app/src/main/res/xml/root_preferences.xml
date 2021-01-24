@@ -8,7 +8,7 @@
         android:id="@+id/idSosOnOff"
         android:defaultValue="true"
         android:key="keySosOnOff"
-        android:title="@string/SOSonoff" />
+        android:title="@string/okay" />
     <EditTextPreference
         android:id="@+id/idSosNumbera"
         android:defaultValue="112"

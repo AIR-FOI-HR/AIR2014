@@ -15,4 +15,7 @@
     <string name="SOSonoff">"SOS (tonen / verbergen) "</string>
     <string name="SOSnumber">"SOS-nummer "</string>
     <string name="Darkmode">"Donkere modus "</string>
+    <string name="DialogTitle">"Locatie is vereist voor BLE-scannen "</string>
+    <string name="DialogMessage">Molimo dozvolite pristup lokaciji</string>
+    <string name="okay">OK</string>
 </resources>
